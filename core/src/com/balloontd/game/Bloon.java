@@ -12,6 +12,7 @@ public abstract class Bloon extends Actor {
     abstract public void draw(Batch batch, float parentAlpha);
 
     abstract public float getDistance();
+    abstract public void setDistance(float dist);
     abstract public Vector2 getCoords();
     abstract public float getTiychRadius();
     abstract public float getSpeed();

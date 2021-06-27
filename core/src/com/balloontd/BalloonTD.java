@@ -2,6 +2,7 @@ package com.balloontd;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.balloontd.game.GameScreen;
 import com.balloontd.start.StartScreen;
 
 public class BalloonTD extends Game {

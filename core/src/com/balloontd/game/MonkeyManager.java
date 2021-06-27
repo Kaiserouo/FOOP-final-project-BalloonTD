@@ -16,11 +16,19 @@ public class MonkeyManager extends Actor {
 
     }
 
-    List<Monkey> getMonkeyList() {
+    public List<Monkey> getMonkeyList() {
 
     }
 
-    void addMonkeyInBuffer(Monkey monkey) {
+    public void addMonkeyInBuffer(Monkey monkey) {
+
+    }
+
+    public void dumpBufferToList() {
+
+    }
+
+    public void cleanDeadMonkeys() {
 
     }
 }

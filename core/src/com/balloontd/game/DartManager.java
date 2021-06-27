@@ -22,5 +22,13 @@ public class DartManager extends Actor {
 
     public void addDartInBuffer(Dart dart) {
 
+    }
 
+    public void dumpBufferToList() {
+
+    }
+
+    public void cleanDeadDarts() {
+
+    }
 }

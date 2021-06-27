@@ -13,6 +13,14 @@ import com.balloontd.start.EnterMenuButton;
 
 
 public class GameScreen implements Screen{
+    private MonkeyManager monkey_manager;
+    private DartManager dart_manager;
+    private BloonManager bloon_manager;
+
+    private Trail trail;
+
+    private Stage stage;
+
     public GameScreen(BalloonTD balloonTD){
     }
 
