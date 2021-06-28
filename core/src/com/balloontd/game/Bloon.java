@@ -6,7 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class Bloon extends Actor {
     @Override
-    abstract public void act(float delta);
+    public void act(float delta) {
+        // move bloon
+    }
 
     @Override
     abstract public void draw(Batch batch, float parentAlpha);
@@ -19,6 +21,4 @@ public abstract class Bloon extends Actor {
     abstract public void pop(Dart dart);
     abstract public void setAliveState(boolean is_alive);
     abstract public boolean getAliveState();
-
-
 }

@@ -17,20 +17,20 @@ public class BloonManager extends Actor {
 
     @Override
     public void act(float delta) {
-        // note that all those popping logic or sorts will
-        // be implemented in e.g. screen, not here.
         for(Bloon bloon: bloon_list)
-            bloon.act(delta);
+            if(bloon.getAliveState())
+                bloon.act(delta);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         for(Bloon bloon: bloon_list)
-            bloon.draw(batch, parentAlpha);
+            if(bloon.getAliveState())
+                bloon.draw(batch, parentAlpha);
     }
 
     public List<Bloon> getBloonList() {
-        return new ArrayList<>(bloon_list);
+        return bloon_list;
     }
 
     public void addBloonInBuffer(Bloon bloon) {
@@ -43,10 +43,12 @@ public class BloonManager extends Actor {
         float dist;
         if(spawn_list.size() % 2 == 0) // even number
             dist = middle_dist - (space * (spawn_list.size() / 2 - 0.5F));
-        else
+        else    // odd number
             dist = middle_dist - (space * (spawn_list.size() / 2));
+
         for(Bloon bloon: spawn_list){
             bloon.setDistance(dist);
+            addBloonInBuffer(bloon);
             dist += space;
         }
     }
@@ -57,6 +59,6 @@ public class BloonManager extends Actor {
     }
 
     public void cleanDeadBloons() {
-        bloon_list.removeIf((bloon) -> bloon.getAliveState() == false);
+        bloon_list.removeIf(bloon -> !bloon.getAliveState());
     }
 }

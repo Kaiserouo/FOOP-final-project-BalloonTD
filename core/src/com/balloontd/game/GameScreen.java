@@ -22,6 +22,7 @@ public class GameScreen implements Screen{
     private Stage stage;
 
     public GameScreen(BalloonTD balloonTD){
+        // stage act sequence: monkey -> dart -> bloon
     }
 
     @Override
@@ -30,6 +31,20 @@ public class GameScreen implements Screen{
 
     @Override
     public void render(float delta) {
+        // render all textures
+        stage.act();    // managers will simply draw all things
+        stage.draw();
+
+        // (Also, popping logic might be able to be handled in managers...
+        // If we discovered that it will cause disasters, then need to handle that here.)
+
+        // at final stage of render, process all managers' buffer
+        monkey_manager.dumpBufferToList();
+        monkey_manager.cleanDeadMonkeys();
+        bloon_manager.dumpBufferToList();
+        bloon_manager.cleanDeadBloons();
+        dart_manager.dumpBufferToList();
+        dart_manager.cleanDeadDarts();
     }
 
     @Override

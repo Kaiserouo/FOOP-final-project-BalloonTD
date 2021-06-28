@@ -8,7 +8,9 @@ import java.util.List;
 
 public abstract class Monkey extends Actor {
     @Override
-    abstract public void act(float delta);
+    abstract public void act(float delta) {
+        // shoot dart
+    }
 
     @Override
     abstract public void draw(Batch batch, float parentAlpha);
@@ -26,4 +28,6 @@ public abstract class Monkey extends Actor {
     abstract public float getSellPrice();
     abstract public void shoot(List<Bloon> in_range_bloons);
     abstract public float getCooldownTime();
+    abstract public void setAliveState(boolean is_alive);
+    abstract public boolean getAliveState();
 }

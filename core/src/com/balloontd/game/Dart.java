@@ -6,7 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class Dart extends Actor {
     @Override
-    abstract public void act(float delta);
+    public void act(float delta) {
+        // move forward
+        // for all bloons, see if touched.
+        //   if touched bloon, call bloon::pop, then decrease
+        //   current dart pierce by 1 (and set alive state to dead if pierceCnt=0 or something)
+    }
 
     @Override
     abstract public void draw(Batch batch, float parentAlpha);
