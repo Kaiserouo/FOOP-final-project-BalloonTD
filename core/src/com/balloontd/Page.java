@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -13,15 +14,15 @@ import com.balloontd.menu.*;
 
 import java.util.ArrayList;
 
-public class Page extends Actor {
+public class Page extends Group{
     private BalloonTD balloonTD;
     private MenuScreen menuScreen;
     private ArrayList<TextureRegion> allRegions;
     private int nowPage;
 
-    private NextPageButton nextPageButton;
-    private PreviousPageButton previousPageButton;
-    private CloseButton closeButton;
+    private Button nextPageButton;
+    private Button previousPageButton;
+    private Button closeButton;
 
     public Page(BalloonTD balloonTD, ArrayList<TextureRegion> regions, MenuScreen menuScreen) {
         this.balloonTD = balloonTD;
@@ -29,42 +30,62 @@ public class Page extends Actor {
         nowPage = 0;
         this.menuScreen = menuScreen;
 
-        makeNextPageButton();
-        makePreviousPageButton();
-        makeCloseButton();
+        makeNextPageButton(this);
+        makePreviousPageButton(this);
+        makeCloseButton(this);
     }
 
-    private void makeNextPageButton(){
-        Texture buttonUpTexture = new Texture("");
-        Texture buttonDownTexture = new Texture("");
-
+    private Button.ButtonStyle makeStyle(Texture upTexture, Texture onTexture){
         Button.ButtonStyle style = new Button.ButtonStyle();
-        style.up = new TextureRegionDrawable(buttonUpTexture);
-        style.down = new TextureRegionDrawable(buttonDownTexture);
+        style.up = new TextureRegionDrawable(upTexture);
+        style.down = new TextureRegionDrawable(onTexture);
 
-        nextPageButton = new NextPageButton(style, this);
+        return style;
+    }
+    private void makeNextPageButton(final Page page){
+        Button.ButtonStyle style = makeStyle(new Texture("page-next.png"),
+                new Texture("page-next-down.png")   );
+
+        nextPageButton = new Button(style);
+        nextPageButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                page.goToNextPage();
+            }
+        });
+
+        nextPageButton.setPosition(200, 100);
+        menuScreen.addActor(nextPageButton);
     }
 
-    private void makePreviousPageButton(){
-        Texture buttonUpTexture = new Texture("");
-        Texture buttonDownTexture = new Texture("");
+    private void makePreviousPageButton(final Page page){
+        Button.ButtonStyle style = makeStyle(new Texture("page-previous.png"),
+                new Texture("page-previous-down.png")   );
 
-        Button.ButtonStyle style = new Button.ButtonStyle();
-        style.up = new TextureRegionDrawable(buttonUpTexture);
-        style.down = new TextureRegionDrawable(buttonDownTexture);
-
-        previousPageButton = new PreviousPageButton(style, this);
+        previousPageButton = new Button(style);
+        previousPageButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                page.goToPreviousPage();
+            }
+        });
+        previousPageButton.setPosition(0, 0);
+        menuScreen.addActor(previousPageButton);
     }
 
-    private void makeCloseButton(){
-        Texture buttonUpTexture = new Texture("");
-        Texture buttonDownTexture = new Texture("");
+    private void makeCloseButton(final Page page){
+        Button.ButtonStyle style = makeStyle(new Texture("page-close.png"),
+                new Texture("page-close.png")   );
 
-        Button.ButtonStyle style = new Button.ButtonStyle();
-        style.up = new TextureRegionDrawable(buttonUpTexture);
-        style.down = new TextureRegionDrawable(buttonDownTexture);
-
-        closeButton = new CloseButton(style, this);
+        closeButton = new Button(style);
+        closeButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                page.setVisible(false);
+            }
+        });
+        closeButton.setPosition(400, 300);
+        menuScreen.addActor(closeButton);
     }
 
     private void goToNextPage(){
@@ -85,7 +106,7 @@ public class Page extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        if (allRegions.get(nowPage) == null || !isVisible()) {
+        if (allRegions.size() == 0 || !isVisible()) {
             return;
         }
 
@@ -106,54 +127,7 @@ public class Page extends Actor {
             nextPageButton.draw(batch, parentAlpha);
         }
 
-        nextPageButton.draw(batch, parentAlpha);
+        closeButton.draw(batch, parentAlpha);
     }
 
-
-    // Inner Class: NextPageButton
-    // To go to the next page(If can)
-    private class NextPageButton extends Button {
-
-        public NextPageButton(ButtonStyle style, final Page page) {
-            super(style);
-
-            addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x, float y){
-                    page.goToNextPage();
-                }
-            });
-        }
-    }
-
-    // Inner Class: PreviousPageButton
-    // To go to the previous page(If can)
-    private class PreviousPageButton extends Button {
-        public PreviousPageButton(ButtonStyle style, final Page page) {
-            super(style);
-
-            addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x, float y){
-                    page.goToPreviousPage();
-                }
-            });
-        }
-    }
-
-    // Inner class: CloseButton
-    // To close the page
-    private class CloseButton extends Button {
-        public CloseButton(ButtonStyle style, final Page page) {
-            super(style);
-
-            addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x, float y){
-                    page.setVisible(false);
-                    event.getListenerActor().setVisible(false);
-                }
-            });
-        }
-    }
 }

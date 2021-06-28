@@ -1,9 +1,9 @@
 package com.balloontd;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
-import com.balloontd.game.GameScreen;
-import com.balloontd.start.StartScreen;
+import com.balloontd.start.*;
+import com.balloontd.menu.*;
+import com.balloontd.game.*;
 
 public class BalloonTD extends Game {
 
@@ -53,6 +53,7 @@ public class BalloonTD extends Game {
 
 	@Override
 	public void dispose () {
+		this.dispose();
 		if(menuScreen != null) {
 			menuScreen.dispose();
 			menuScreen = null;
