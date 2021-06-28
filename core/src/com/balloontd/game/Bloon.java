@@ -36,6 +36,7 @@ public abstract class Bloon extends Actor {
 
     abstract public Vector2 getCoords();
 
+
     public float getTouchRadius() {
         return this.radius;
     }
