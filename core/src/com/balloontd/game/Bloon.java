@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class Bloon extends Actor {
+    TextureRegion region;
+    private final Float base_speed = 0;    // to be decide
     private boolean is_alive;
     private Float distance, radius, speed;
     
@@ -14,7 +16,15 @@ public abstract class Bloon extends Actor {
     }
 
     @Override
-    abstract public void draw(Batch batch, float parentAlpha);
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+
+        batch.draw(region, getX(), getY(), 
+                getOriginX(), getOriginY(), 
+                getWidth(), getHeight(), 
+                getScaleX(), getScaleY(), 
+                getRotation());
+    }
 
     public float getDistance() {
         return this.distance;
