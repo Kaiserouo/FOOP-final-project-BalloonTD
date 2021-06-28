@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.balloontd.BalloonTD;
-import com.balloontd.ButtonListener;
 import com.balloontd.start.EnterMenuButton;
 
 
@@ -18,6 +17,7 @@ public class GameScreen implements Screen{
     private BloonManager bloon_manager;
 
     private Trail trail;
+    private Player player;
 
     private Stage stage;
 
@@ -66,4 +66,9 @@ public class GameScreen implements Screen{
     @Override
     public void dispose() {
     }
+
+    public MonkeyManager getMonkeyManager() { return monkey_manager; }
+    public DartManager getDartManager() { return dart_manager; }
+    public BloonManager getBloonManager() { return bloon_manager; }
+    public Player getPlayer() { return player; }
 }

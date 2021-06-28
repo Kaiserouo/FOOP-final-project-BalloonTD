@@ -16,7 +16,7 @@ public abstract class Bloon extends Actor {
     abstract public float getDistance();
     abstract public void setDistance(float dist);
     abstract public Vector2 getCoords();
-    abstract public float getTiychRadius();
+    abstract public float getTouchRadius();
     abstract public float getSpeed();
     abstract public void pop(Dart dart);
     abstract public void setAliveState(boolean is_alive);
