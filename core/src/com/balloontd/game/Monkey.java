@@ -1,6 +1,7 @@
 package com.balloontd.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -10,20 +11,23 @@ import java.util.stream.Collectors;
 
 public abstract class Monkey extends Actor {
     private float cd_time;
-    private Vector2 coord;
     protected float body_radius;
     protected float shoot_radius;
     protected GameScreen game_screen;
     private boolean alive_state;
 
-    public Monkey(GameScreen game_screen, Vector2 coord, float body_radius,
-                  float shoot_radius, boolean alive_state) {
+    public Monkey(GameScreen game_screen, TextureRegion region,
+                  Vector2 coord, float body_radius, float shoot_radius) {
         cd_time = 0;
         this.game_screen = game_screen;
-        this.coord = coord.cpy();
         this.body_radius = body_radius;
         this.shoot_radius = shoot_radius;
-        this.alive_state = alive_state;
+
+        setSize(region.getRegionWidth(), region.getRegionHeight());
+        setOrigin(region.getRegionWidth() * 0.5F, region.getRegionHeight() * 0.5F);
+        setCoords(coord);
+
+        setAliveState(true);
     }
 
 
@@ -43,8 +47,14 @@ public abstract class Monkey extends Actor {
                                .stream()
                                .filter(bloon -> bloon.getCoords().dst2(getCoords()) < range_squ)
                                .collect(Collectors.toList());
-            shoot(in_range_bloons);
-            cd_time -= getCooldownTime();
+            if(in_range_bloons.size() != 0){
+                cd_time -= getCooldownTime();
+                shoot(in_range_bloons);
+            }
+            else{
+                // no bloon in range, wait for 1/10 * cooldown time
+                cd_time = getCooldownTime() * 0.9F;
+            }
         }
     }
 
@@ -52,8 +62,19 @@ public abstract class Monkey extends Actor {
     abstract public void draw(Batch batch, float parentAlpha);
 
     abstract public String getName();
-    public Vector2 getCoords() { return coord; }
-    public Vector2 setCoords(Vector2 new_coord) { coord = new coord.cpy(); }
+    public Vector2 getCoords() {
+        // defined as the middle of the texture
+        // note that everytime you change someone's width,
+        // its coords will change, too
+        return new Vector2(
+                getX() + getWidth() / 2,
+                getY() + getHeight() / 2
+        );
+    }
+    public void setCoords(Vector2 new_coord) {
+        setX(new_coord.x - getWidth() / 2);
+        setY(new_coord.y - getHeight() / 2);
+    }
     public float getBodyRadius() { return body_radius; }
     public float getShootRadius() { return shoot_radius; }
     abstract public int getCurLevel();
