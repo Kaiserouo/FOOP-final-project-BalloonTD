@@ -40,9 +40,11 @@ public class NormalDart extends Dart {
         setCoords(getCoords().cpy().mulAdd(velocity, delta));
     }
     public boolean touched(Bloon bloon) {
-        return false;
+        return bloon.getCoords().dst(getCoords()) <= bloon.getTouchRadius();
     }
     public void hit(Bloon bloon) {
-
+        // note that `pierce_cnt - 1` is done in Dart::act
+        // only need to pop whole lot of bloons here
+        bloon.pop(this);
     }
 }

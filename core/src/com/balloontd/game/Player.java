@@ -8,6 +8,6 @@ public class Player {
     public synchronized float getMoney() { return money; }
     public synchronized void setHP(float hp) { this.hp = hp; }
     public synchronized void setMoney(float money) { this.money = money; }
-    public synchronized void costHP(int cost_hp) { hp -= cost_hp; }
-    public synchronized void addMoney(int added_money) { money += added_money; }
+    public synchronized void costHP(float cost_hp) { hp -= cost_hp; }
+    public synchronized void addMoney(float added_money) { money += added_money; }
 }

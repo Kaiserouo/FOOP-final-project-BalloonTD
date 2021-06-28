@@ -17,11 +17,12 @@ public class NormalMonkey extends Monkey {
 
     public NormalMonkey(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
-              region.getRegionWidth() * 0.5F + 10F, 1000F);
+              region.getRegionWidth() * 0.5F + 10F, 70F);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        // may need to add animations...?
         batch.draw(
                 region,
                 getX(), getY(),
@@ -68,8 +69,8 @@ public class NormalMonkey extends Monkey {
         // shoot
         game_screen.getDartManager().addDartInBuffer(
                 new NormalDart(
-                        game_screen, 1, getCoords(),
-                        bloon.getCoords().sub(getCoords()).setLength(200F)
+                        game_screen, 3, getCoords(),
+                        bloon.getCoords().sub(getCoords()).setLength(2000F)
                 )
         );
     }

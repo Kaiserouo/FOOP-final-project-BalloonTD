@@ -1,11 +1,31 @@
-public class RedBallon implements Ballon () {
-    private TextureRegion region;
+package com.balloontd.game.bloons;
 
-    public RedBallon(Float distance) {
-        this.distance = distance;
-        this.speed = base_speed*1;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.balloontd.game.Bloon;
+import com.balloontd.game.Dart;
+import com.balloontd.game.GameScreen;
+
+public class RedBloon extends Bloon {
+    private static final TextureRegion region =
+            new TextureRegion(new Texture(Gdx.files.internal("red_bloon.png")));
+
+    public RedBloon(GameScreen game_screen, Float distance) {
+        super(game_screen, region, distance);
+        this.speed = base_speed * 1F;
+        setTouchRadius(getTouchRadius() * 0.5F);
+        setScale(0.5F);
     }
-    
-    public void pop(Dart dart);
-    
+
+    @Override
+    public void pop(Dart dart) {
+        game_screen.getPlayer().addMoney(1);
+        setAliveState(false);
+    }
+
+    @Override
+    public float costHealthAmt() {
+        return 1;
+    }
 }

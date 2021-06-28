@@ -1,5 +1,6 @@
 package com.balloontd.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -19,7 +20,7 @@ public abstract class Dart extends Actor {
                 Vector2 coord, int pierce_cnt) {
         this.game_screen = game_screen;
         this.pierce_cnt = pierce_cnt;
-        
+
         setSize(region.getRegionWidth(), region.getRegionHeight());
         setOrigin(region.getRegionWidth() * 0.5F, region.getRegionHeight() * 0.5F);
         setCoords(coord);
@@ -38,9 +39,12 @@ public abstract class Dart extends Actor {
         for(Bloon bloon: game_screen.getBloonManager().getBloonList()){
             if(!bloon.getAliveState()) continue;
             if(touched(bloon)){
+                Gdx.app.log("Dart::act", "I see touched balloon!");
                 hit(bloon);
-                if((--pierce_cnt) == 0)
+                if((--pierce_cnt) <= 0){
                     setAliveState(false);
+                    break;
+                }
             }
         }
 
