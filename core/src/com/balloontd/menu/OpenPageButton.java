@@ -1,20 +1,27 @@
-package com.balloontd.start;
+package com.balloontd.menu;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.balloontd.*;
 
-public class EnterMenuButton extends Button {
+import java.util.ArrayList;
 
-    public EnterMenuButton(final BalloonTD balloonTD, ButtonStyle style){
+public class OpenPageButton extends Button {
+
+    private Page page;
+    public OpenPageButton(ButtonStyle style, final Page page){
         super(style);
+        this.page = page;
 
         addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                balloonTD.enterMenuScreen();
+                page.setVisible(true);
             }
         });
     }
+
 }

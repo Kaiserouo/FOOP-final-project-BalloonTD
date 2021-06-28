@@ -2,22 +2,26 @@ package com.balloontd.start;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.balloontd.*;
 
 
-public class StartScreen implements Screen{
+public class StartScreen extends ScreenAdapter {
     private BalloonTD balloonTD;
 
     private Stage stage;
     private Texture logoTexture;
-    private MyActor logoActor;
+    private Image logoImage;
 
-    private Texture playButtonTexture;
+    private Texture playButtonUpTexture, playButtonDownTexture;
     private EnterMenuButton playButton;
 
 
@@ -29,26 +33,33 @@ public class StartScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
 
         logoTexture = new Texture("bloons-td-logo.png");
-        logoActor = new MyActor(new TextureRegion(logoTexture));
-        logoActor.setPosition(0, 0);
-        logoActor.setSize((float)BalloonTD.WORLD_WIDTH, (float)BalloonTD.WORLD_HEIGHT);
+        logoImage = new Image(new TextureRegion(logoTexture));
+        logoImage.setPosition(0, 0);
+        logoImage.setSize((float)BalloonTD.WORLD_WIDTH, (float)BalloonTD.WORLD_HEIGHT);
 
-        playButtonTexture = new Texture("start-screen-play-button.png");
-        playButton = new EnterMenuButton(balloonTD, new TextureRegion(playButtonTexture), new ButtonListener());
-        playButton.setPosition(
-                stage.getWidth() *  0.4F -  playButton.getWidth()/2,
-                stage.getHeight() * 0.17F - playButton.getHeight()/2
-                );
-        playButton.setSize(playButton.getWidth() * 2F,
-                playButton.getHeight() * 2F);
+        makePlayButton();
 
-        stage.addActor(logoActor);
+
+        stage.addActor(logoImage);
         stage.addActor(playButton);
 
     }
 
-    @Override
-    public void show() {
+    private void makePlayButton(){
+        playButtonUpTexture = new Texture("start-screen-play-button.png");
+        playButtonDownTexture = new Texture("start-screen-play-button-down.png");
+
+        Button.ButtonStyle style = new Button.ButtonStyle();
+        style.up = new TextureRegionDrawable(playButtonUpTexture);
+        style.down = new TextureRegionDrawable(playButtonDownTexture);
+
+        playButton = new EnterMenuButton(balloonTD, style);
+        playButton.setPosition(
+                stage.getWidth() *  0.4F -  playButton.getWidth()/2,
+                stage.getHeight() * 0.17F - playButton.getHeight()/2
+        );
+        playButton.setSize(playButton.getWidth() * 2F,
+                playButton.getHeight() * 2F);
     }
 
     @Override
@@ -60,21 +71,7 @@ public class StartScreen implements Screen{
         stage.draw();
     }
 
-    @Override
-    public void resize(int width, int height) {
-    }
 
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-    }
 
     @Override
     public void dispose() {
