@@ -29,7 +29,7 @@ public class RainbowBloon extends Bloon {
                     // distance will be set in function so no worries
                     new ZebraBloon(game_screen, 0F),
                     new ZebraBloon(game_screen, 0F)
-                ), 15F
+                ), 25F
         );
         setAliveState(false);
     }
