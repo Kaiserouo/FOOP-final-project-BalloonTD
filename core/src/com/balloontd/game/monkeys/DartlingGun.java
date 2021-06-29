@@ -80,8 +80,4 @@ public class DartlingGunner extends Monkey {
                 )
         );
     }
-
-    public float getCooldownTime() {
-        return 1.5F;
-    }
 }

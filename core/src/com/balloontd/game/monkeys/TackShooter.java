@@ -73,8 +73,4 @@ public class TackShooter extends Monkey {
             );
         }
     }
-
-    public float getCooldownTime() {
-        return 1.5F;
-    }
 }
