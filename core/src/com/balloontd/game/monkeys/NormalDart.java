@@ -11,8 +11,7 @@ import com.balloontd.game.GameScreen;
 
 public class NormalDart extends Dart {
     // assume heading direction is same as moving direction (i.e. velocity)
-    // also, assume the dart coords is at needle point
-    // i.e.
+    // also, assume the dart coords is at middle of dart
     private Vector2 velocity;
     private static final TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal("tack_dart.png")));
 
@@ -37,7 +36,9 @@ public class NormalDart extends Dart {
         );
     }
     public void move(float delta) {
-        setCoords(getCoords().cpy().mulAdd(velocity, delta));
+        setCoords(
+                getCoords().cpy().mulAdd(velocity, delta)
+        );
     }
     public boolean touched(Bloon bloon) {
         return bloon.getCoords().dst(getCoords()) <= bloon.getTouchRadius();

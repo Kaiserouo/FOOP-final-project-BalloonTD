@@ -5,10 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.balloontd.BalloonTD;
-import com.balloontd.start.EnterMenuButton;
 
 
 public class GameScreen implements Screen{
@@ -22,7 +22,9 @@ public class GameScreen implements Screen{
     private Stage stage;
 
     public GameScreen(BalloonTD balloonTD){
-        // stage act sequence: monkey -> dart -> bloon
+        // stage act sequence:
+        // background -> dart -> monkey -> bloon -> userinterface
+        // -> (shoot range circle (if want to add now))
     }
 
     @Override
@@ -71,4 +73,15 @@ public class GameScreen implements Screen{
     public DartManager getDartManager() { return dart_manager; }
     public BloonManager getBloonManager() { return bloon_manager; }
     public Player getPlayer() { return player; }
+    public Trail getTrail() { return trail; }
+
+    public boolean inRange(Vector2 coord, float allowed_delta) {
+        // test if in range of screen
+        // with tolerance `allowed_delta`
+        float x = coord.x, y = coord.y;
+        return x >= -allowed_delta
+                && y >= -allowed_delta
+                && x <= BalloonTD.WORLD_WIDTH + allowed_delta
+                && y <= BalloonTD.WORLD_HEIGHT + allowed_delta;
+    }
 }
