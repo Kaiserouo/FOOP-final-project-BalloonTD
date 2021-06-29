@@ -15,9 +15,12 @@ public class BombShooter extends Monkey {
     public static final Texture texture = new Texture(Gdx.files.internal("bomb_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
 
+    private static final Float[3] levelup_cost = new Float[3] {700, 250, 400};
+
     public BombShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
-              region.getRegionWidth() * 0.5F + 10F, 70F);
+              region.getRegionWidth() * 0.5F + 10F, 120F);
+        cd_time = 2;
     }
 
     @Override

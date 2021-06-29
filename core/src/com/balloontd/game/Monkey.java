@@ -16,6 +16,10 @@ public abstract class Monkey extends Actor {
     protected GameScreen game_screen;
     private boolean alive_state;
 
+    private float[] levelup_cost;
+    private int cur_level, max_level;
+    
+
     public Monkey(GameScreen game_screen, TextureRegion region,
                   Vector2 coord, float body_radius, float shoot_radius) {
         cd_time = 0;
@@ -82,12 +86,12 @@ public abstract class Monkey extends Actor {
     public float getBodyRadius() { return body_radius; }
     public float getShootRadius() { return shoot_radius; }
 
-    abstract public int getCurLevel();
-    abstract public int getMaxLevel();
+    public int getCurLevel() { return cur_level; }
+    public int getMaxLevel() { return max_level; }
 
     // given this level, get level up cost
     // (e.g. monkey is level 0, getLevelUp(getCurLevel()) = level up cost of 0->1)
-    abstract public float getLevelUpCost(int cur_level);
+    public float getLevelUpCost(int cur_level) { return levelup_cost[cur_level+1]; }
 
     // level up, after this function getCurLevel should increase
     abstract public void levelUp();
@@ -97,7 +101,7 @@ public abstract class Monkey extends Actor {
     abstract public String getLevelUpInfoDisplay(int cur_level);
 
     // get level 0 monkey price
-    abstract public float getBuyPrice();
+    public float getBuyPrice() { return levelup_cost[0]; }
 
     // get price, basically it's a proportion of total spent money on this monkey
     abstract public float getSellPrice();
@@ -107,7 +111,7 @@ public abstract class Monkey extends Actor {
 
     // get cooldown time. NOT the current remaining time until next shoot
     // e.g. monkey cooldown is 1 second, after 0.5 second, this should still return 1
-    abstract public float getCooldownTime();
+    public float getCooldownTime() { return cd_time; }
 
     public void setAliveState(boolean is_alive) { alive_state = is_alive; }
     public boolean getAliveState() { return alive_state; }
