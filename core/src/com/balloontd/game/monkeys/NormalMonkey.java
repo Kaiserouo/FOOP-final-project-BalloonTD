@@ -36,6 +36,9 @@ public class NormalMonkey extends Monkey {
     public String getName() {
         return "NormalMonkey";
     }
+    public String getIntro() {
+        return "Shoot a dart";
+    }
     public int getCurLevel() {
         return 0;
     }

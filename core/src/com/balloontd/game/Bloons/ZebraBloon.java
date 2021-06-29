@@ -28,7 +28,7 @@ public class ZebraBloon extends Bloon {
                     // list of new bloons
                     // distance will be set in function so no worries
                     new BlackBloon(game_screen, 0F),
-                    new Whiteloon(game_screen, 0F)
+                    new WhiteBloon(game_screen, 0F)
                 ), 25F
         );
         setAliveState(false);

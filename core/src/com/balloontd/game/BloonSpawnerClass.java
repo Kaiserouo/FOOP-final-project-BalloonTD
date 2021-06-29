@@ -24,7 +24,7 @@ public class BloonSpawnerClass implements IBloonSpawner {
 
     @Override
     public List<String> getValidNames() {
-        static String[] names = {
+        String[] names = {
                 "R", "B"
         };
         return List.of(names)
