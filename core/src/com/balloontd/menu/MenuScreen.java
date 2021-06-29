@@ -1,13 +1,11 @@
 package com.balloontd.menu;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -25,35 +23,42 @@ public class MenuScreen extends ScreenAdapter {
     private Image background;
 
     private Button startGameButton;
-
     private Button exitGameButton;
-
     private Button instructionButton;
-    private Page instructionPage;
-
     private Button bmdListButton;
-    private Page bmdListPage;
 
+
+    private Stage pageStage;
+    private boolean instructionPageOpen, bmdListPageOpen;
+    private Button nextPageButton, previousPageButton, closePageButton;
+    private ArrayList<Image> instructionPages;
+    private ArrayList<Image> bmdListPages;
+    private int nowPage = 0;
 
     public MenuScreen(BalloonTD balloonTD){
         this.balloonTD = balloonTD;
 
         stage = new Stage(new StretchViewport(BalloonTD.WORLD_WIDTH, BalloonTD.WORLD_HEIGHT));
-        //Gdx.input.setInputProcessor(stage);
 
         Texture backgroundTexture = new Texture("menu-background.png");
         background = new Image(new TextureRegion(backgroundTexture));
         stage.addActor(background);
 
         makeStartGameButton();
-
         makeExitGameButton();
+        makeInstructionButton();
+        makeBmdListButton();
 
-        makeInstructionPage();
-        makeInstructionButton(instructionPage);
 
-        makeBmdListPage();
-        makeBmdListButton(bmdListPage);
+        pageStage = new Stage(new StretchViewport(BalloonTD.WORLD_WIDTH, BalloonTD.WORLD_HEIGHT));
+        instructionPageOpen = false; bmdListPageOpen = false;
+        nowPage = 0;
+        makeInstructionPages();
+        makeBmdListPages();
+        makeClosePageButton();
+        makeNextPageButton();
+        makePreviousPageButton();
+
     }
 
     private Button.ButtonStyle makeStyle(Texture upTexture, Texture downTexture){
@@ -97,20 +102,7 @@ public class MenuScreen extends ScreenAdapter {
         exitGameButton.setSize(exitGameButton.getWidth() * 1.8F, exitGameButton.getHeight() * 1.8F);
     }
 
-    private void makeInstructionPage(){
-        ArrayList<TextureRegion> regions = new ArrayList<TextureRegion>();
-
-        // maybe be multiple
-        regions.add(new TextureRegion(new Texture("page.png")));
-
-        instructionPage = new Page(balloonTD, regions, this);
-        stage.addActor(instructionPage);
-
-        instructionPage.setPosition(stage.getWidth()/2 - instructionPage.getWidth()/2,
-                stage.getHeight()/2 - instructionPage.getHeight()/2);
-        //instructionPage.setVisible(false);
-    }
-    private void makeInstructionButton(final Page page){
+    private void makeInstructionButton(){
         Button.ButtonStyle style = makeStyle(new Texture("menu-instruction.png"),
                 new Texture("menu-instruction-down.png"));
 
@@ -118,8 +110,10 @@ public class MenuScreen extends ScreenAdapter {
         instructionButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                instructionPage.setVisible(true);
-                instructionPage.toFront();
+                instructionPageOpen = true;
+                Gdx.input.setInputProcessor(pageStage);
+                nowPage = 0;
+                instructionPages.get(nowPage).setVisible(true);
             }
         });
         stage.addActor(instructionButton);
@@ -128,15 +122,7 @@ public class MenuScreen extends ScreenAdapter {
         instructionButton.setSize(instructionButton.getWidth() * 1.8F, instructionButton.getHeight() * 1.8F);
     }
 
-    private void makeBmdListPage(){
-        ArrayList<TextureRegion> regions = new ArrayList<TextureRegion>();
-
-        //maybe be multiple
-        regions.add(new TextureRegion(new Texture("page.png")));
-
-        bmdListPage = new Page(balloonTD, regions, this);
-    }
-    private void makeBmdListButton(final Page page){
+    private void makeBmdListButton(){
         Button.ButtonStyle style = makeStyle(new Texture("menu-bmdList.png"),
                 new Texture("menu-bmdList-down.png"));
 
@@ -144,7 +130,10 @@ public class MenuScreen extends ScreenAdapter {
         bmdListButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                stage.addActor(page);
+                bmdListPageOpen = true;
+                Gdx.input.setInputProcessor(pageStage);
+                nowPage = 0;
+                bmdListPages.get(nowPage).setVisible(true);
             }
         });
         stage.addActor(bmdListButton);
@@ -153,8 +142,101 @@ public class MenuScreen extends ScreenAdapter {
         bmdListButton.setSize(bmdListButton.getWidth() * 1.6F, bmdListButton.getHeight() * 1.6F);
     }
 
-    public void addActor(Actor actor){
-        stage.addActor(actor);
+
+    private Image makePage(TextureRegion region){
+        Image page = new Image(region);
+        pageStage.addActor(page);
+        page.setVisible(false);
+        page.setSize(page.getWidth() * 1.5F, page.getHeight() * 1.5F);
+        page.setPosition(pageStage.getWidth()/2 - page.getWidth()/2,
+                pageStage.getHeight()/2 - page.getHeight()/2);
+        return page;
+    }
+    private void makeInstructionPages(){
+        instructionPages = new ArrayList<Image>();
+        // maybe be multiple
+        instructionPages.add(makePage(new TextureRegion(new Texture("page.png"))));
+    }
+
+    private void makeBmdListPages(){
+        bmdListPages = new ArrayList<Image>();
+        //maybe be multiple
+        bmdListPages.add(makePage(new TextureRegion(new Texture("page.png"))));
+    }
+
+    private void makeNextPageButton(){
+        Button.ButtonStyle style = makeStyle(new Texture("page-next.png"),
+                new Texture("page-next-down.png"));
+
+        nextPageButton = new Button(style);
+        nextPageButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                nowPage++;
+            }
+        });
+        pageStage.addActor(nextPageButton);
+        //nextPageButton.setVisible(false);
+
+        nextPageButton.setPosition(890, 100);
+    }
+
+    private void makePreviousPageButton(){
+        Button.ButtonStyle style = makeStyle(new Texture("page-previous.png"),
+                new Texture("page-previous-down.png"));
+
+        previousPageButton = new Button(style);
+            previousPageButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                nowPage--;
+            }
+        });
+            pageStage.addActor(previousPageButton);
+            //previousPageButton.setVisible(false);
+
+            previousPageButton.setPosition(160, 100);
+    }
+
+    private void makeClosePageButton(){
+        Button.ButtonStyle style = makeStyle(new Texture("page-close.png"),
+                new Texture("page-close-down.png"));
+
+        closePageButton = new Button(style);
+        closePageButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                instructionPageOpen = false;
+                bmdListPageOpen = false;
+                Gdx.input.setInputProcessor(stage);
+            }
+        });
+        pageStage.addActor(closePageButton);
+
+        closePageButton.setPosition(900, 500);
+    }
+
+    private void setButtonsVisibility(){
+        if(nowPage == 0){
+            previousPageButton.setVisible(false);
+        }else{
+            previousPageButton.setVisible(true);
+        }
+
+        int totalPage;
+        if(instructionPageOpen){
+            totalPage = instructionPages.size();
+        }else{
+            totalPage = bmdListPages.size();
+        }
+
+        if(nowPage == totalPage - 1){
+            nextPageButton.setVisible(false);
+        }else{
+            nextPageButton.setVisible(true);
+        }
+
+        closePageButton.toFront();
     }
 
 
@@ -170,6 +252,16 @@ public class MenuScreen extends ScreenAdapter {
 
         stage.act();
         stage.draw();
+        if(instructionPageOpen || bmdListPageOpen){
+            if(instructionPageOpen) {
+                instructionPages.get(nowPage).toFront();
+            }else{
+                bmdListPages.get(nowPage).toFront();
+            }
+            setButtonsVisibility();
+            pageStage.act();
+            pageStage.draw();
+        }
     }
 
 
