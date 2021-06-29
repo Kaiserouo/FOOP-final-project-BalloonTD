@@ -53,6 +53,10 @@ public class BloonManager extends Actor {
         }
     }
 
+    public int getBufferBloonCnt() {
+        return bloon_buffer.size();
+    }
+
     public void dumpBufferToList() {
         bloon_list.addAll(bloon_buffer);
         bloon_buffer.clear();
