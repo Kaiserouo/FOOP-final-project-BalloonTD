@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +108,9 @@ public abstract class Monkey extends Actor {
 
     // given in-range bloons, perform shoot action
     abstract public void shoot(List<Bloon> in_range_bloons);
+
+    abstract public Image getUIImage();
+    abstract public Monkey cloneMonkey();
 
     // get cooldown time. NOT the current remaining time until next shoot
     // e.g. monkey cooldown is 1 second, after 0.5 second, this should still return 1
