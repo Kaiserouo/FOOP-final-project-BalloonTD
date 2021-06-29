@@ -12,7 +12,7 @@ import com.balloontd.game.Monkey;
 import java.util.List;
 
 public class TackShooter extends Monkey {
-    public static final Texture texture = new Texture(Gdx.files.internal("normal_monkey.png"));
+    public static final Texture texture = new Texture(Gdx.files.internal("tack_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
 
     public TackShooter(GameScreen game_screen, Vector2 coord) {
