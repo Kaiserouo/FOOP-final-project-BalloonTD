@@ -28,7 +28,7 @@ public class BlueBloon extends Bloon {
                     // list of new bloons
                     // distance will be set in function so no worries
                     new RedBloon(game_screen, 0F)
-                ), 15F
+                ), 25F
         );
         setAliveState(false);
     }

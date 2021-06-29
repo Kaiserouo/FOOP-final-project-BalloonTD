@@ -13,7 +13,7 @@ public class BlackBloon extends Bloon {
     private static final TextureRegion region =
             new TextureRegion(new Texture(Gdx.files.internal("black_bloon.png")));
 
-    public BlueBloon(GameScreen game_screen, Float distance) {
+    public BlackBloon(GameScreen game_screen, Float distance) {
         super(game_screen, region, distance);
         this.speed = base_speed * 1F;
         setTouchRadius(getTouchRadius() * 0.5F);
@@ -29,13 +29,13 @@ public class BlackBloon extends Bloon {
                     // distance will be set in function so no worries
                     new PinkBloon(game_screen, 0F),
                     new PinkBloon(game_screen, 0F)
-                ), 15F
+                ), 25F
         );
         setAliveState(false);
     }
 
     @Override
     public float costHealthAmt() {
-        return 6;
+        return 11;
     }
 }
