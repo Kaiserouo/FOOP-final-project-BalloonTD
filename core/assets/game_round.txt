@@ -2,35 +2,27 @@ round_count 3
 ---
 round 1
 reward 100
-1 R
-2 R
-3 R
-4 R
-5 R
+stream 
+	wait 1
+	single Red
+5
 ---
 round 2
 reward 99
-1 R
-2 R
-3 R
-4 R
-5 R
-6 R
-7 R
-8 R
-9 R
-10 R
+stream 
+	wait 1
+	single Red
+10
 ---
 round 3
 reward 150
-1 R
-1.5 R
-2 R
-2.5 R
-3 R
-4 B
-5 B
-6 B
-7 B
-8 B
+wait 0.5
+stream
+	wait 0.5
+	single Red
+5
+stream
+	wait 1
+	single Blue
+5
 ---
