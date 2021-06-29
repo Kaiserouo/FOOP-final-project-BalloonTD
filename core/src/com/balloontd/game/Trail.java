@@ -9,4 +9,5 @@ public interface Trail {
     public void draw(Batch batch, float parentAlpha);
     public Vector2 getStartPoint();
     public Vector2 getEndPoint();
+    public boolean checkIntersectCircle(Vector2 coord, float radius);
 }

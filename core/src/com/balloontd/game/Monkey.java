@@ -108,7 +108,7 @@ public abstract class Monkey extends Actor {
     // get cooldown time. NOT the current remaining time until next shoot
     // e.g. monkey cooldown is 1 second, after 0.5 second, this should still return 1
     abstract public float getCooldownTime();
-    
+
     public void setAliveState(boolean is_alive) { alive_state = is_alive; }
     public boolean getAliveState() { return alive_state; }
 }
