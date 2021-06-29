@@ -15,6 +15,8 @@ public class TackShooter extends Monkey {
     public static final Texture texture = new Texture(Gdx.files.internal("tack_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
 
+    private static final Float[4] levelup_cost = new Float[4] {350, 200, 150, 300};
+
     public TackShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
                 region.getRegionWidth() * 0.5F + 10F, 70F);

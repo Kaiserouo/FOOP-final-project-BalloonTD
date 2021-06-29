@@ -11,13 +11,16 @@ import com.balloontd.game.Monkey;
 
 import java.util.List;
 
-public class NormalMonkey extends Monkey {
-    public static final Texture texture = new Texture(Gdx.files.internal("normal_monkey.png"));
+public class DartShooter extends Monkey {
+    public static final Texture texture = new Texture(Gdx.files.internal("dart_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
 
-    public NormalMonkey(GameScreen game_screen, Vector2 coord) {
+    private static final Float[5] levelup_cost = new Float[5] {200, 50, 120, 150, 300};
+
+    public DartShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, 70F);
+        cd_time = 1;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class NormalMonkey extends Monkey {
     }
 
     public String getName() {
-        return "NormalMonkey";
+        return "DartShooter";
     }
     public String getIntro() {
         return "Shoot a dart";

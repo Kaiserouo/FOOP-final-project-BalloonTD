@@ -15,6 +15,8 @@ public class SuperMonkey extends Monkey {
     public static final Texture texture = new Texture(Gdx.files.internal("super_monkey.png"));
     public static final TextureRegion region = new TextureRegion(texture);
 
+    private static final Float[4] levelup_cost = new Float[4] {2800, 800, 160};
+
     public SuperMonkey(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, 70F);

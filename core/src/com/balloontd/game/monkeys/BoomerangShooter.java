@@ -11,11 +11,13 @@ import com.balloontd.game.Monkey;
 
 import java.util.List;
 
-public class BoomerangMonkey extends Monkey {
-    public static final Texture texture = new Texture(Gdx.files.internal("boomerang_monkey.png"));
+public class BoomerangShooter extends Monkey {
+    public static final Texture texture = new Texture(Gdx.files.internal("boomerang_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
 
-    public BoomerangMonkey(GameScreen game_screen, Vector2 coord) {
+    private static final Float[3] levelup_cost = new Float[3] {600, 200, 300};
+
+    public BoomerangShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, 70F);
     }
@@ -34,10 +36,10 @@ public class BoomerangMonkey extends Monkey {
     }
 
     public String getName() {
-        return "BoomerangMonkey";
+        return "BoomerangShooter";
     }
     public String getIntro() {
-        return "Shoot boomerang";
+        return "Shoot a boomerang";
     }
     public int getCurLevel() {
         return 0;
