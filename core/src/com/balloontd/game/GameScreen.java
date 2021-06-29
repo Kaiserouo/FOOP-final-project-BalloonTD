@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.balloontd.BalloonTD;
@@ -74,6 +75,7 @@ public class GameScreen implements Screen{
     public BloonManager getBloonManager() { return bloon_manager; }
     public Player getPlayer() { return player; }
     public Trail getTrail() { return trail; }
+    public void addActor(Actor actor){ stage.addActor(actor);}
 
     public boolean inRange(Vector2 coord, float allowed_delta) {
         // test if in range of screen
