@@ -75,6 +75,7 @@ public abstract class Monkey extends Actor {
         setX(new_coord.x - getWidth() / 2);
         setY(new_coord.y - getHeight() / 2);
     }
+    abstract public String getIntro();
     public float getBodyRadius() { return body_radius; }
     public float getShootRadius() { return shoot_radius; }
     abstract public int getCurLevel();

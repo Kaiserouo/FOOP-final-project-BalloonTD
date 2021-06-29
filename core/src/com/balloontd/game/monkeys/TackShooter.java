@@ -36,6 +36,9 @@ public class TackShooter extends Monkey {
     public String getName() {
         return "TackShooter";
     }
+    public String getIntro() {
+        return "Shoot all directions";
+    }
     public int getCurLevel() {
         return 0;
     }
