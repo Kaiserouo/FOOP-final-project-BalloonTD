@@ -55,4 +55,11 @@ public class CompositeTrail implements Trail {
     public Vector2 getEndPoint() {
         return trails.get(trails.size() - 1).getEndPoint();
     }
+
+    @Override
+    public boolean checkIntersectCircle(Vector2 coord, float radius) {
+        for(Trail tr: trails)
+            if(tr.checkIntersectCircle(coord, radius)) return true;
+        return false;
+    }
 }
