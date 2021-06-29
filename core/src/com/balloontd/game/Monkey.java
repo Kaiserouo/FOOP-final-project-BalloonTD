@@ -110,7 +110,7 @@ public abstract class Monkey extends Actor {
     abstract public void shoot(List<Bloon> in_range_bloons);
 
     abstract public Image getUIImage();
-    abstract public Monkey cloneMonkey();
+    abstract public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords);
 
     // get cooldown time. NOT the current remaining time until next shoot
     // e.g. monkey cooldown is 1 second, after 0.5 second, this should still return 1
