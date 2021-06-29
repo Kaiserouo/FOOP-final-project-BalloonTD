@@ -75,18 +75,40 @@ public abstract class Monkey extends Actor {
         setX(new_coord.x - getWidth() / 2);
         setY(new_coord.y - getHeight() / 2);
     }
+
+    // get basic information about monkey
     abstract public String getIntro();
+
     public float getBodyRadius() { return body_radius; }
     public float getShootRadius() { return shoot_radius; }
+
     abstract public int getCurLevel();
     abstract public int getMaxLevel();
+
+    // given this level, get level up cost
+    // (e.g. monkey is level 0, getLevelUp(getCurLevel()) = level up cost of 0->1)
     abstract public float getLevelUpCost(int cur_level);
+
+    // level up, after this function getCurLevel should increase
     abstract public void levelUp();
+
+    // given current level, get next level's information
+    // (e.g. monkey level 1 have "longer range" = getLevelUpDisplay(0))
     abstract public String getLevelUpInfoDisplay(int cur_level);
+
+    // get level 0 monkey price
     abstract public float getBuyPrice();
+
+    // get price, basically it's a proportion of total spent money on this monkey
     abstract public float getSellPrice();
+
+    // given in-range bloons, perform shoot action
     abstract public void shoot(List<Bloon> in_range_bloons);
+
+    // get cooldown time. NOT the current remaining time until next shoot
+    // e.g. monkey cooldown is 1 second, after 0.5 second, this should still return 1
     abstract public float getCooldownTime();
+    
     public void setAliveState(boolean is_alive) { alive_state = is_alive; }
     public boolean getAliveState() { return alive_state; }
 }
