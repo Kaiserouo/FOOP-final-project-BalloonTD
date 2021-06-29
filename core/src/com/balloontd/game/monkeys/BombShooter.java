@@ -19,7 +19,8 @@ public class BombShooter extends Monkey {
 
     public BombShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
-              region.getRegionWidth() * 0.5F + 10F, 70F);
+              region.getRegionWidth() * 0.5F + 10F, 120F);
+        cd_time = 2;
     }
 
     @Override

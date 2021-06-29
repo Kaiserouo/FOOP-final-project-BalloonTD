@@ -19,7 +19,8 @@ public class TackShooter extends Monkey {
 
     public TackShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
-                region.getRegionWidth() * 0.5F + 10F, 70F);
+                region.getRegionWidth() * 0.5F + 10F, 100F);
+        cd_time = 1;
     }
 
     @Override
