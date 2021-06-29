@@ -13,7 +13,7 @@ public class RainbowBloon extends Bloon {
     private static final TextureRegion region =
             new TextureRegion(new Texture(Gdx.files.internal("rainbow_bloon.png")));
 
-    public BlueBloon(GameScreen game_screen, Float distance) {
+    public RainbowBloon(GameScreen game_screen, Float distance) {
         super(game_screen, region, distance);
         this.speed = base_speed * 1F;
         setTouchRadius(getTouchRadius() * 0.5F);
@@ -36,6 +36,6 @@ public class RainbowBloon extends Bloon {
 
     @Override
     public float costHealthAmt() {
-        return 8;
+        return 47;
     }
 }
