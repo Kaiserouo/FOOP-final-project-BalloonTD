@@ -30,10 +30,13 @@ public class GameScreen implements Screen{
         // -> (shoot range circle (if want to add now))
         userInterface = new UserInterface(this);
         stage.addActor(userInterface);
+
+        //use  userInterface.addBuyMonkeyInfo(monkey, image); to add new Monkey in Buy Monkey Mode
     }
 
     @Override
     public void show() {
+        userInterface.setInputProcessor();
     }
 
     @Override
@@ -72,6 +75,10 @@ public class GameScreen implements Screen{
 
     @Override
     public void dispose() {
+        if(stage != null){
+            stage.dispose();
+        }
+        this.dispose();
     }
 
     public MonkeyManager getMonkeyManager() { return monkey_manager; }
