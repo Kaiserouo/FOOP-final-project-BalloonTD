@@ -10,15 +10,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Monkey extends Actor {
-    private float cd_time;
+    protected float cd_time;
     protected float body_radius;
     protected float shoot_radius;
     protected GameScreen game_screen;
-    private boolean alive_state;
+    protected boolean alive_state;
 
-    private float[] levelup_cost;
-    private int cur_level, max_level;
-    
+    protected float[] levelup_cost;
+    protected int cur_level, max_level;
 
     public Monkey(GameScreen game_screen, TextureRegion region,
                   Vector2 coord, float body_radius, float shoot_radius) {
@@ -66,6 +65,8 @@ public abstract class Monkey extends Actor {
     abstract public void draw(Batch batch, float parentAlpha);
 
     abstract public String getName();
+    
+    // coordinate
     public Vector2 getCoords() {
         // defined as the middle of the texture
         // note that everytime you change someone's width,
@@ -83,7 +84,10 @@ public abstract class Monkey extends Actor {
     // get basic information about monkey
     abstract public String getIntro();
 
+    // radius
+    public void setBodyRadius(float f) {this.body_radius = f;}
     public float getBodyRadius() { return body_radius; }
+    public
     public float getShootRadius() { return shoot_radius; }
 
     public int getCurLevel() { return cur_level; }
