@@ -17,13 +17,16 @@ public class TackShooter extends Monkey {
     public static final TextureRegion region = new TextureRegion(texture);
     public static final Float[] tackshooter_levelup_cost =
             new Float[] {350F, 200F, 150F, 300F};
-    private
+    private float dart_speed = 1500F;
+
+    private int shoot_cnt;
 
     public TackShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
-                region.getRegionWidth() * 0.5F + 10F, 100F);
+                region.getRegionWidth() * 0.5F + 3F, 100F);
         cd_time = 1F;
         levelup_cost = tackshooter_levelup_cost;
+        shoot_cnt = 8;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class TackShooter extends Monkey {
     }
 
     public String getName() {
-        return "TackShooter";
+        return "Tack Shooter";
     }
     public String getIntro() {
         return "Shoot all directions";
@@ -58,7 +61,7 @@ public class TackShooter extends Monkey {
             case 2:
                 shoot_radius = 150F; break;
             case 3:
-                break;
+                shoot_cnt = 12; break;
         }
     }
     public String getLevelUpInfoDisplay(int cur_level) {
@@ -71,18 +74,18 @@ public class TackShooter extends Monkey {
             case 3:
                 return "Tack Sprayer";  // 12
         }
+        return "";
+
     }
-    
-    //public float getSellPrice() {
-        //return 0;
-    //}
+
     public void shoot(List<Bloon> in_range_bloons) {
-        // simply shoot 8 direction
-        for(int i = 0; i != 360; i += 45 ){
+        for(int i = 0; i != shoot_cnt; i++ ){
             game_screen.getDartManager().addDartInBuffer(
                     new TackDart(
-                            game_screen, 3, getCoords(),
-                            new Vector2(0,1).setAngleDeg(i).setLength(2000F)
+                            game_screen, 1, getCoords(),
+                            new Vector2(0,1)
+                                    .setAngleDeg(360F * i / shoot_cnt)
+                                    .setLength(dart_speed)
                     )
             );
         }
@@ -93,5 +96,4 @@ public class TackShooter extends Monkey {
     public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
         return new TackShooter(game_screen, coords);
     }
-    
 }

@@ -17,12 +17,16 @@ public class BombShooter extends Monkey {
     public static final TextureRegion region = new TextureRegion(texture);
     public static final Float[] bombshooter_levelup_cost =
             new Float[] {700F, 250F, 400F};
+    private float bomb_radius;
+    private float bomb_speed;
 
     public BombShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
-              region.getRegionWidth() * 0.5F + 10F, 120F);
-        cd_time = 2F;
+              region.getRegionWidth() * 0.5F + 3F, 120F);
+        cd_time = 1.3F;
         levelup_cost = bombshooter_levelup_cost;
+        bomb_radius = 50F;
+        bomb_speed = 750F;
     }
 
     @Override
@@ -39,7 +43,7 @@ public class BombShooter extends Monkey {
     }
 
     public String getName() {
-        return "BombShooter";
+        return "Bomb Shooter";
     }
     public String getIntro() {
         return "Shoot a bomb";
@@ -55,7 +59,7 @@ public class BombShooter extends Monkey {
             case 1:
                 shoot_radius = 160F; break;
             case 2:
-                break;
+                bomb_radius = 70F; break;
         }
     }
     public String getLevelUpInfoDisplay(int cur_level) {
@@ -66,6 +70,7 @@ public class BombShooter extends Monkey {
             case 2:
                 return "Larger Bomb";   // 50
         }
+        return "";
     }
     
     public void shoot(List<Bloon> in_range_bloons) {
@@ -80,9 +85,9 @@ public class BombShooter extends Monkey {
 
         // shoot
         game_screen.getDartManager().addDartInBuffer(
-                new NormalDart(
-                        game_screen, 3, getCoords(),
-                        bloon.getCoords().sub(getCoords()).setLength(2000F)
+                new BombDart(
+                        game_screen, getCoords(), bomb_radius,
+                        bloon.getCoords().sub(getCoords()).setLength(bomb_speed)
                 )
         );
     }

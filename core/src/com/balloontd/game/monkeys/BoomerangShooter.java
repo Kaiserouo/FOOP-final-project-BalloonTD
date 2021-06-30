@@ -43,7 +43,7 @@ public class BoomerangShooter extends Monkey {
     }
 
     public String getName() {
-        return "BoomerangShooter";
+        return "Boomerang Shooter";
     }
     public String getIntro() {
         return "Shoot a boomerang";
@@ -59,7 +59,7 @@ public class BoomerangShooter extends Monkey {
             case 1:
                 shoot_radius = 250F; break;
             case 2:
-                break;
+                pierce_cnt = 5; break;
         }
     }
     public String getLevelUpInfoDisplay(int cur_level) {
@@ -70,10 +70,9 @@ public class BoomerangShooter extends Monkey {
             case 2:
                 return "Sharper Edge";   // 5
         }
+        return "";
     }
-    //public float getSellPrice() {
-        //return 0;
-    //}
+
     public void shoot(List<Bloon> in_range_bloons) {
         // choose nearest one
         if(in_range_bloons.size() == 0) return;
@@ -90,9 +89,10 @@ public class BoomerangShooter extends Monkey {
                 new BoomerangDart(
                         game_screen, pierce_cnt, getCoords(), bloon.getCoords(),
                         getShootRadius() * 1.3F,
-                        0.9F, 0.3F, 0.15F
+                        0.975F, 0.3F, 0.15F
                 )
         );
+        setRotation(bloon.getCoords().sub(getCoords()).angleDeg());
     }
     public Image getUIImage() {
         return new Image(new TextureRegion(region));

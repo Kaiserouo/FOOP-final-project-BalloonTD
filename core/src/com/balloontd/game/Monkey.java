@@ -114,7 +114,7 @@ public abstract class Monkey extends Actor {
         float p = 0;
         for (int i = 0; i <= cur_level; i++)
             p += levelup_cost[i];
-        return 0.8*p;
+        return 0.8F*p;
     }
 
     // given in-range bloons, perform shoot action

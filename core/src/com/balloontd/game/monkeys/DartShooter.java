@@ -44,7 +44,7 @@ public class DartShooter extends Monkey {
     }
 
     public String getName() {
-        return "DartShooter";
+        return "Dart Shooter";
     }
     public String getIntro() {
         return "Shoot a dart";
@@ -96,6 +96,7 @@ public class DartShooter extends Monkey {
 
         // shoot
         shoot_behavior.shoot(bloon);
+        setRotation(bloon.getCoords().sub(getCoords()).angleDeg());
     }
     public Image getUIImage() {
         return new Image(new TextureRegion(region));
@@ -137,7 +138,7 @@ public class DartShooter extends Monkey {
             game_screen.getDartManager().addDartInBuffer(
                     new NormalDart(
                             game_screen, pierce_cnt, getCoords(),
-                            velocity.cpy().setAngleDeg(velocity.angleDeg() + 15F)
+                            velocity.cpy().setAngleDeg(velocity.angleDeg() - 15F)
                     )
             );
         }

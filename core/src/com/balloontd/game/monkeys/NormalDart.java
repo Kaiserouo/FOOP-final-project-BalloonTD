@@ -13,14 +13,13 @@ public class NormalDart extends Dart {
     // assume heading direction is same as moving direction (i.e. velocity)
     // also, assume the dart coords is at middle of dart
     private Vector2 velocity;
-    private static final TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal("tack_dart.png")));
+    private static final TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal("dart.png")));
 
     public NormalDart(GameScreen game_screen, int pierce_cnt,
                       Vector2 coord, Vector2 velocity) {
         super(game_screen, region, coord, pierce_cnt);
 
         this.velocity = velocity.cpy();
-        setScale(0.5F);
         setRotation(velocity.angleDeg());
     }
 
