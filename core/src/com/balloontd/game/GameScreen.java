@@ -7,9 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.balloontd.BalloonTD;
+import com.balloontd.MyActor;
+import com.balloontd.game.monkeys.BombDart;
 
 
 public class GameScreen implements Screen{
@@ -43,12 +47,15 @@ public class GameScreen implements Screen{
         userInterface = new UserInterface(this);
         stage.addActor(userInterface);
 
-        //use  userInterface.addBuyMonkeyInfo(monkey, image); to add new Monkey in Buy Monkey Mode
-    }
 
+        addUIBuyMonkeyInfo();
+        addAllMonkeyListener();
+    }
+    
+    
     @Override
     public void show() {
-        userInterface.setInputProcessor();
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -97,6 +104,29 @@ public class GameScreen implements Screen{
     public Player getPlayer() { return player; }
     public Trail getTrail() { return trail; }
     public RoundManager getRoundManager(){ return round_manager; }
+    public void addActor(Actor actor){ stage.addActor(actor);}
+    public void stageAddListener(){
+        stage.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                if(checkIntersection() == false){
+                    monkey_manager.addMonkeyInBuffer(userInterface.getNewMonkey());
+                    stage.removeListener(this);
+                    userInterface.setWithMonkeyMode(false);
+                }
+            }
+        });
+    }
+    public boolean checkIntersection(){
+        Monkey newMonkey = userInterface.getNewMonkey();
+        for(Monkey monkey: monkey_manager.getMonkeyList()){
+            if(monkey.getCoords().dst(newMonkey.getCoords()) < monkey.getBodyRadius() + newMonkey.getBodyRadius()){
+                return true;
+            }
+        }
+        return  trail.checkIntersectCircle(newMonkey.getCoords(), newMonkey.getBodyRadius());
+    }
+    
 
     public boolean inRange(Vector2 coord, float allowed_delta) {
         // test if in range of screen
@@ -106,5 +136,37 @@ public class GameScreen implements Screen{
                 && y >= -allowed_delta
                 && x <= BalloonTD.WORLD_WIDTH + allowed_delta
                 && y <= BalloonTD.WORLD_HEIGHT + allowed_delta;
+    }
+
+    //use  userInterface.addBuyMonkeyInfo(monkey, image); to add new Monkey info
+    public void addUIBuyMonkeyInfo(){
+
+    }
+    public void addMonkeyListener(Monkey monkey){
+        monkey.addListener(new ClickListener(){
+           @Override
+           public void clicked(InputEvent event, float x, float y){
+               userInterface.setInterfaceMode(UserInterface.MONKEY_INFO_MODE);
+           }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                userInterface.showMonkeyRange(true);
+
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                userInterface.showMonkeyRange(false);
+
+            }
+        });
+    }
+
+    // call addMonkeyListener(monkey) to add listener to monkey
+    public void addAllMonkeyListener(){
+        for(Monkey monkey: monkey_manager.getMonkeyList()){
+            addMonkeyListener(monkey);
+        }
     }
 }

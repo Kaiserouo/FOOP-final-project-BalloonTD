@@ -68,7 +68,7 @@ public class BuyMonkeyInterface extends Actor {
                 }
             }
         });
-        userInterface.addActor(nextMonkeyButton);
+        gameScreen.addActor(nextMonkeyButton);
         nextMonkeyButton.setPosition(1055, 105);
     }
 
@@ -88,7 +88,7 @@ public class BuyMonkeyInterface extends Actor {
                 }
             }
         });
-        userInterface.addActor(previousMonkeyButton);
+        gameScreen.addActor(previousMonkeyButton);
         previousMonkeyButton.setPosition(955, 105);
     }
 
@@ -108,12 +108,12 @@ public class BuyMonkeyInterface extends Actor {
                 if(player.getMoney() >= monkey.getBuyPrice()) {
                     newMonkey = monkey.cloneMonkey(gameScreen, new Vector2(Gdx.input.getX(), Gdx.input.getY()));
                     setWithMonkeyMode(true);
-                    userInterface.stageAddListener();
+                    gameScreen.stageAddListener();
                 }
 
             }
         });
-        userInterface.addActor(buyMonkeyButton);
+        gameScreen.addActor(buyMonkeyButton);
         buyMonkeyButton.setPosition(960, 430);
     }
 

@@ -55,7 +55,7 @@ public class MonkeyInfoInterface extends Actor {
                 monkey = null;
             }
         });
-        userInterface.addActor(sellMonkeyButton);
+        gameScreen.addActor(sellMonkeyButton);
         sellMonkeyButton.setPosition(955, 105);
     }
 
@@ -77,7 +77,7 @@ public class MonkeyInfoInterface extends Actor {
                 }
             }
         });
-        userInterface.addActor(upgradeMonkeyButton);
+        gameScreen.addActor(upgradeMonkeyButton);
         upgradeMonkeyButton.setPosition(1055, 105);
     }
 
@@ -96,7 +96,7 @@ public class MonkeyInfoInterface extends Actor {
             }
         });
         enterBuyModeButton.setPosition(960, 430);
-        userInterface.addActor(enterBuyModeButton);
+        gameScreen.addActor(enterBuyModeButton);
     }
 
     @Override

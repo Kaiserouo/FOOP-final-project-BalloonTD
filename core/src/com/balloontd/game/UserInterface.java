@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class UserInterface extends Actor {
     private GameScreen gameScreen;
-    private Stage stage;
 
     private Texture backgroundTexture;
     private Image background;
@@ -45,7 +44,6 @@ public class UserInterface extends Actor {
 
     public UserInterface(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
-        stage = new Stage(new StretchViewport(BalloonTD.WORLD_WIDTH, BalloonTD.WORLD_HEIGHT));
 
         makeBackground();
         setRoundInfo();
@@ -53,25 +51,22 @@ public class UserInterface extends Actor {
         makeExitGameButton();
 
         monkeyInfoInterface = new MonkeyInfoInterface(gameScreen, this);
-        stage.addActor(monkeyInfoInterface);
+        gameScreen.addActor(monkeyInfoInterface);
 
         buyMonkeyInterface = new BuyMonkeyInterface(gameScreen, this);
-        stage.addActor(buyMonkeyInterface);
+        gameScreen.addActor(buyMonkeyInterface);
 
         font = new BitmapFont(Gdx.files.internal("font/ComicSansMS.fnt"));
 
         interfaceMode = BUY_MONKEY_MODE;
     }
 
-    public void setInputProcessor(){
-        Gdx.input.setInputProcessor(stage);
-    }
 
     private void makeBackground(){
         backgroundTexture = new Texture("userInterface-background.png");
         background = new Image(new TextureRegion(backgroundTexture));
         background.setPosition(950, 0);
-        stage.addActor(background);
+        gameScreen.addActor(background);
     }
 
     private void setRoundInfo(){
@@ -92,12 +87,12 @@ public class UserInterface extends Actor {
         startRoundButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                gameScreen.startRound();
+                gameScreen.getRoundManager().startRound();
                 startRoundButton.setVisible(false);
             }
         });
         startRoundButton.setPosition(960, 37);
-        stage.addActor(startRoundButton);
+        gameScreen.addActor(startRoundButton);
     }
 
     private void makeExitGameButton(){
@@ -115,7 +110,7 @@ public class UserInterface extends Actor {
             }
         });
         exitGameButton.setPosition(1030, 0);
-        stage.addActor(exitGameButton);
+        gameScreen.addActor(exitGameButton);
     }
 
     public boolean getInterfaceMode(){ return interfaceMode;   }
@@ -124,18 +119,8 @@ public class UserInterface extends Actor {
 
     // deal with placing the new monkey on the valid place in the map
 
-    public void stageAddListener(){
-        stage.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                if(checkIntersection() == false){
-                    gameScreen.getMonkeyManager().addMonkeyInBuffer(buyMonkeyInterface.getNewMonkey());
-                    stage.removeListener(this);
-                    buyMonkeyInterface.setWithMonkeyMode(false);
-                }
-            }
-        });
-    }
+    public void setWithMonkeyMode(boolean mode){buyMonkeyInterface.setWithMonkeyMode(mode);}
+
 
     public boolean checkIntersection(){
         MonkeyManager monkeyManager = gameScreen.getMonkeyManager();
@@ -148,9 +133,6 @@ public class UserInterface extends Actor {
         return  gameScreen.getTrail().checkIntersectCircle(newMonkey.getCoords(), newMonkey.getBodyRadius());
     }
 
-    public void addActor(Actor actor){
-        stage.addActor(actor);
-    }
     public void addBuyMonkeyInfo(Monkey monkey, Image img){
         buyMonkeyInterface.addBuyMonkeyInfo(monkey, img);
     }
@@ -160,22 +142,16 @@ public class UserInterface extends Actor {
     @Override
     public void act(float delta){
         super.act(delta);
-        stage.act();
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha){
         super.draw(batch, parentAlpha);
 
-        stage.draw();
-
         font.draw(batch, roundInfo, 960, 630);
     }
 
     public void dispose(){
-        if(stage != null){
-            stage.dispose();
-        }
         if(backgroundTexture != null) {
             backgroundTexture.dispose();
         }
