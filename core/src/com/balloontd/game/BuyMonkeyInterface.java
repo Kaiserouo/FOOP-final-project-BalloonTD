@@ -47,8 +47,8 @@ public class BuyMonkeyInterface extends Actor {
     }
 
 
-    public void addBuyMonkeyInfo(Monkey monkey, Image monkeyImage){
-        BuyMonkeyInfo buyMonkeyInfo = new BuyMonkeyInfo(monkey, monkeyImage);
+    public void addBuyMonkeyInfo(Monkey monkey){
+        BuyMonkeyInfo buyMonkeyInfo = new BuyMonkeyInfo(monkey, monkey.getUIImage());
         buyMonkeyInfoList.add(buyMonkeyInfo);
     }
 
@@ -131,6 +131,14 @@ public class BuyMonkeyInterface extends Actor {
         if(userInterface.getInterfaceMode() == UserInterface.BUY_MONKEY_MODE) {
             if (getWithMonkeyMode()) {
                 newMonkey.setCoords(new Vector2(Gdx.input.getX(), BalloonTD.WORLD_HEIGHT - Gdx.input.getY()));
+                userInterface.showBodyRange(true, newMonkey);
+                if(gameScreen.checkIntersection()){
+                    userInterface.showInvalidRange(true, newMonkey);
+                    userInterface.showShootRange(false, newMonkey);
+                }else{
+                    userInterface.showInvalidRange(false, newMonkey);
+                    userInterface.showShootRange(true, newMonkey);
+                }
             }
             nextMonkeyButton.setVisible(true);
             previousMonkeyButton.setVisible(true);

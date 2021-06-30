@@ -107,6 +107,9 @@ public class MonkeyInfoInterface extends Actor {
             upgradeMonkeyButton.setVisible(true);
             enterBuyModeButton.setVisible(true);
             this.setVisible(true);
+            userInterface.showShootRange(true, monkey);
+            userInterface.showBodyRange(false, monkey);
+            userInterface.showShootRange(false, monkey);
         } else{
             sellMonkeyButton.setVisible(false);
             upgradeMonkeyButton.setVisible(false);
