@@ -193,6 +193,7 @@ public class UserInterface extends Actor {
     public void setMouseOnMonkey(boolean isOn){
         mouseOnMonkey = isOn;
     }
+    public void setMonkey(Monkey monkey){monkeyInfoInterface.setMonkey(monkey);}
 
     @Override
     public void act(float delta){

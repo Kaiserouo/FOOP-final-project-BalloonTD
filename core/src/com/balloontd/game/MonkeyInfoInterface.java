@@ -53,6 +53,7 @@ public class MonkeyInfoInterface extends Actor {
                 gameScreen.getPlayer().addMoney(monkey.getSellPrice());
                 monkey.setAliveState(false);
                 monkey = null;
+                userInterface.setInterfaceMode(UserInterface.BUY_MONKEY_MODE);
             }
         });
         gameScreen.addActor(sellMonkeyButton);
@@ -71,9 +72,12 @@ public class MonkeyInfoInterface extends Actor {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 Player player = gameScreen.getPlayer();
-                if(player.getMoney() >= monkey.getLevelUpCost(monkey.getCurLevel())) {
-                    player.setMoney(player.getMoney() - monkey.getLevelUpCost(monkey.getCurLevel()));
-                    monkey.levelUp();
+                if(monkey.getCurLevel() < monkey.getMaxLevel()){
+                    if(player.getMoney() >= monkey.getLevelUpCost(monkey.getCurLevel())) {
+                        player.setMoney(player.getMoney() - monkey.getLevelUpCost(monkey.getCurLevel()));
+                        monkey.levelUp();
+                        setMonkey(monkey);
+                    }
                 }
             }
         });
@@ -104,12 +108,12 @@ public class MonkeyInfoInterface extends Actor {
         super.act(delta);
         if(userInterface.getInterfaceMode() == UserInterface.MONKEY_INFO_MODE){
             sellMonkeyButton.setVisible(true);
-            upgradeMonkeyButton.setVisible(true);
+            upgradeMonkeyButton.setVisible(monkey.getCurLevel() < monkey.getMaxLevel());
             enterBuyModeButton.setVisible(true);
             this.setVisible(true);
-            userInterface.showShootRange(true, monkey);
-            userInterface.showBodyRange(false, monkey);
             userInterface.showShootRange(false, monkey);
+            userInterface.showBodyRange(false, monkey);
+            userInterface.showInvalidRange(false, monkey);
         } else{
             sellMonkeyButton.setVisible(false);
             upgradeMonkeyButton.setVisible(false);

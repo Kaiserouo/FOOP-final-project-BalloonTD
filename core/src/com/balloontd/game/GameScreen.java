@@ -185,16 +185,18 @@ public class GameScreen implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y){
                 userInterface.setInterfaceMode(UserInterface.MONKEY_INFO_MODE);
+                userInterface.setMonkey(monkey);
             }
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 userInterface.setMouseOnMonkey(true);
-                System.out.println("mouse on monkey");
+                userInterface.showShootRange(true, monkey);
+                userInterface.showBodyRange(true, monkey);
             }
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 userInterface.setMouseOnMonkey(false);
-                System.out.println("mouse leave monkey");
+
             }
         });
     }

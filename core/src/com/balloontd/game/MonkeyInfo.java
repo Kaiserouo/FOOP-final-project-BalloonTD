@@ -33,19 +33,23 @@ public class MonkeyInfo extends Actor {
         this.monkey = monkey;
         setNowInfo();
         setUpgradeInfo();
+
     }
 
     private void setNowInfo(){
         nowInfo = "";
-        nowInfo += ("Lv. " + monkey.getCurLevel() + " " + monkey.getName() + "\n");
+        nowInfo += (monkey.getName() + "\n");
+        nowInfo += ("Lv." + monkey.getCurLevel() + "\n");
         nowInfo += ("Sell: $" + monkey.getSellPrice());
     }
 
     private void setUpgradeInfo(){
         upgradeInfo = "";
-        upgradeInfo += ("Upgrade info: \n");
-        upgradeInfo += (monkey.getLevelUpInfoDisplay(monkey.getCurLevel()) +"\n");
-        upgradeInfo += ("Price:  $" + monkey.getLevelUpCost(monkey.getCurLevel()));
+        if(monkey.getCurLevel() < monkey.getMaxLevel()) {
+            upgradeInfo += ("Upgrade : \n");
+            upgradeInfo += (monkey.getLevelUpInfoDisplay(monkey.getCurLevel()) + "\n");
+            upgradeInfo += ("Price:  $" + monkey.getLevelUpCost(monkey.getCurLevel()));
+        }
     }
 
     @Override
@@ -60,7 +64,7 @@ public class MonkeyInfo extends Actor {
         background.draw(batch, parentAlpha);
 
         font.draw(batch, nowInfo, 965, 410);
-        font.draw(batch, upgradeInfo, 965, 345);
+        font.draw(batch, upgradeInfo, 965, 315);
     }
 
     public void dispose(){
