@@ -17,6 +17,7 @@ public class TackShooter extends Monkey {
     public static final TextureRegion region = new TextureRegion(texture);
     public static final Float[] tackshooter_levelup_cost =
             new Float[] {350F, 200F, 150F, 300F};
+    private
 
     public TackShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
@@ -79,7 +80,7 @@ public class TackShooter extends Monkey {
         // simply shoot 8 direction
         for(int i = 0; i != 360; i += 45 ){
             game_screen.getDartManager().addDartInBuffer(
-                    new NormalDart(
+                    new TackDart(
                             game_screen, 3, getCoords(),
                             new Vector2(0,1).setAngleDeg(i).setLength(2000F)
                     )
@@ -87,18 +88,13 @@ public class TackShooter extends Monkey {
         }
     }
     public Image getUIImage() {
-<<<<<<< HEAD
         return new Image(new TextureRegion(region));
     }
     public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
         return new TackShooter(game_screen, coords);
-=======
-        return null;
-
     }
-    public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
-        return null;
 
->>>>>>> d028d02d3fca13531fee192234c25e151782805a
+    private interface ShootBehavior() {
+        void shoot(int)
     }
 }

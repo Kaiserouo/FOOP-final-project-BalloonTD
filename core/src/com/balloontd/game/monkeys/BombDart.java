@@ -1,4 +1,6 @@
 package com.balloontd.game.monkeys;
 
-public class BombDart extends BombDart {
+import com.balloontd.game.Dart;
+
+public class BombDart extends Dart {
 }
