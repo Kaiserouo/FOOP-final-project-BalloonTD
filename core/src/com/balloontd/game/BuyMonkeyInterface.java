@@ -106,6 +106,7 @@ public class BuyMonkeyInterface extends Actor {
                 Monkey monkey = buyMonkeyInfoList.get(infoIndex).getMonkey();
                 Player player = gameScreen.getPlayer();
                 if(player.getMoney() >= monkey.getBuyPrice()) {
+                    player.setMoney(player.getMoney() - monkey.getBuyPrice());
                     newMonkey = monkey.cloneMonkey(gameScreen, new Vector2(Gdx.input.getX(), Gdx.input.getY()));
                     setWithMonkeyMode(true);
                     gameScreen.stageAddListener();
@@ -139,6 +140,10 @@ public class BuyMonkeyInterface extends Actor {
                     userInterface.showInvalidRange(false, newMonkey);
                     userInterface.showShootRange(true, newMonkey);
                 }
+            }else{
+                userInterface.showBodyRange(false, newMonkey);
+                userInterface.showInvalidRange(false, newMonkey);
+                userInterface.showShootRange(false, newMonkey);
             }
             nextMonkeyButton.setVisible(true);
             previousMonkeyButton.setVisible(true);

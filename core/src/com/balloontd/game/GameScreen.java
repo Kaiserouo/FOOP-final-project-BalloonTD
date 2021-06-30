@@ -62,13 +62,12 @@ public class GameScreen implements Screen{
         );
 
         trail = CompositeTrail.makeTrailByLines("trail.txt");
-        player = new Player();
+        player = new Player(200, 5000);
 
         userInterface = new UserInterface(this);
         stage.addActor(userInterface);
 
         addUIBuyMonkeyInfo();
-        addAllMonkeyListener();
     }
     
     
@@ -141,9 +140,12 @@ public class GameScreen implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y){
                 if(checkIntersection() == false){
-                    monkey_manager.addMonkeyInBuffer(userInterface.getNewMonkey());
+                    Monkey monkey = userInterface.getNewMonkey();
+                    monkey_manager.addMonkeyInBuffer(monkey);
+                    addMonkeyListener(monkey);
                     stage.removeListener(this);
                     userInterface.setWithMonkeyMode(false);
+                    System.out.println("place monkey");
                 }
             }
         });
@@ -180,29 +182,21 @@ public class GameScreen implements Screen{
     }
     public void addMonkeyListener(final Monkey monkey){
         monkey.addListener(new ClickListener(){
-           @Override
-           public void clicked(InputEvent event, float x, float y){
-               userInterface.setInterfaceMode(UserInterface.MONKEY_INFO_MODE);
-           }
-
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                userInterface.setInterfaceMode(UserInterface.MONKEY_INFO_MODE);
+            }
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                userInterface.showShootRange(true, monkey);
-
+                userInterface.setMouseOnMonkey(true);
+                System.out.println("mouse on monkey");
             }
-
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                userInterface.showShootRange(false, monkey);
-
+                userInterface.setMouseOnMonkey(false);
+                System.out.println("mouse leave monkey");
             }
         });
     }
 
-    // call addMonkeyListener(monkey) to add listener to monkey
-    public void addAllMonkeyListener(){
-        for(Monkey monkey: monkey_manager.getMonkeyList()){
-            addMonkeyListener(monkey);
-        }
-    }
 }

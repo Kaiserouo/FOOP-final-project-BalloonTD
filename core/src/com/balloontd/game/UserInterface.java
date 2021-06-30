@@ -41,11 +41,12 @@ public class UserInterface extends Actor {
     public final static boolean BUY_MONKEY_MODE = true;
     public final static boolean MONKEY_INFO_MODE = false;
 
-    public Texture bodyRangeTexture, shootRangeTexture, invalidRangeTexture;
-    public Image bodyRangeCircle, shootRangeCircle, invalidRangeCircle;
+    private Texture bodyRangeTexture, shootRangeTexture, invalidRangeTexture;
+    private Image bodyRangeCircle, shootRangeCircle, invalidRangeCircle;
 
-    public EndingPage endingPage;
+    private EndingPage endingPage;
 
+    boolean mouseOnMonkey;
 
     public UserInterface(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -68,6 +69,7 @@ public class UserInterface extends Actor {
         makeRangeCircle();
 
         endingPage = new EndingPage(gameScreen);
+        mouseOnMonkey = false;
     }
 
 
@@ -177,7 +179,7 @@ public class UserInterface extends Actor {
         if(show){
             invalidRangeCircle.setVisible(true);
             invalidRangeCircle.setSize(monkey.getShootRadius() * 2, monkey.getShootRadius() * 2);
-           invalidRangeCircle.setPosition(monkey.getCoords().x - monkey.getBodyRadius(),
+           invalidRangeCircle.setPosition(monkey.getCoords().x - monkey.getShootRadius(),
                     monkey.getCoords().y - monkey.getShootRadius());
         }else{
             invalidRangeCircle.setVisible(false);
@@ -188,11 +190,14 @@ public class UserInterface extends Actor {
         endingPage.gameOver(is_win);
     }
 
-
+    public void setMouseOnMonkey(boolean isOn){
+        mouseOnMonkey = isOn;
+    }
 
     @Override
     public void act(float delta){
         super.act(delta);
+        setRoundInfo();
         if(gameScreen.getRoundManager().isInRound()){
             startRoundButton.setVisible(false);
         }else {
@@ -204,10 +209,10 @@ public class UserInterface extends Actor {
     public void draw(Batch batch, float parentAlpha){
         super.draw(batch, parentAlpha);
 
-        if(bodyRangeCircle.isVisible()){
+        if(bodyRangeCircle.isVisible() || mouseOnMonkey){
             bodyRangeCircle.draw(batch, parentAlpha);
         }
-        if(shootRangeCircle.isVisible()){
+        if(shootRangeCircle.isVisible() || mouseOnMonkey){
             shootRangeCircle.draw(batch, parentAlpha);
         }
         if(invalidRangeCircle.isVisible()){
