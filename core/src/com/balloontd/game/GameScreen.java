@@ -16,7 +16,7 @@ public class GameScreen implements Screen{
     private MonkeyManager monkey_manager;
     private DartManager dart_manager;
     private BloonManager bloon_manager;
-    private RoundManager roundManager;
+    private RoundManager round_manager;
     private UserInterface userInterface;
 
     private Trail trail;
@@ -28,6 +28,18 @@ public class GameScreen implements Screen{
         // stage act sequence:
         // background -> dart -> monkey -> bloon -> userinterface
         // -> (shoot range circle (if want to add now))
+        dart_manager = new DartManager();
+        monkey_manager = new MonkeyManager();
+        bloon_manager = new BloonManager();
+        stage.addActor(dart_manager);
+        stage.addActor(monkey_manager);
+        stage.addActor(bloon_manager);
+
+        round_manager = new RoundManager(
+                this, "game_round.txt",
+                new BloonSpawnerClass(this)
+        );
+
         userInterface = new UserInterface(this);
         stage.addActor(userInterface);
 
@@ -45,8 +57,7 @@ public class GameScreen implements Screen{
         stage.act();    // managers will simply draw all things
         stage.draw();
 
-        // (Also, popping logic might be able to be handled in managers...
-        // If we discovered that it will cause disasters, then need to handle that here.)
+        round_manager.act(delta);
 
         // at final stage of render, process all managers' buffer
         monkey_manager.dumpBufferToList();
@@ -78,7 +89,6 @@ public class GameScreen implements Screen{
         if(stage != null){
             stage.dispose();
         }
-        this.dispose();
     }
 
     public MonkeyManager getMonkeyManager() { return monkey_manager; }
@@ -86,7 +96,7 @@ public class GameScreen implements Screen{
     public BloonManager getBloonManager() { return bloon_manager; }
     public Player getPlayer() { return player; }
     public Trail getTrail() { return trail; }
-    public RoundManager getRoundManager(){ return roundManager; }
+    public RoundManager getRoundManager(){ return round_manager; }
 
     public boolean inRange(Vector2 coord, float allowed_delta) {
         // test if in range of screen
