@@ -4,6 +4,11 @@ public class Player {
     private float hp;
     private float money;
 
+    public Player(float hp, float money) {
+        this.hp = hp;
+        this.money = money;
+    }
+
     public synchronized float getHP() { return hp; }
     public synchronized float getMoney() { return money; }
     public synchronized void setHP(float hp) { this.hp = hp; }
