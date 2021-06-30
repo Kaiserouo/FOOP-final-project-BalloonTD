@@ -15,12 +15,12 @@ public class DartShooter extends Monkey {
     public static final Texture texture = new Texture(Gdx.files.internal("dart_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
 
-    private static final Float[5] levelup_cost = new Float[5] {200, 50, 120, 150, 300};
-
     public DartShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, 100F);
-        cd_time = 1;
+        
+        levelup_cost = new float[5] {200, 50, 120, 150, 300};
+        cd_time = 1F;
     }
 
     @Override
@@ -42,23 +42,14 @@ public class DartShooter extends Monkey {
     public String getIntro() {
         return "Shoot a dart";
     }
-    public int getCurLevel() {
-        return 0;
-    }
-    public int getMaxLevel() {
-        return 0;
-    }
-    public float getLevelUpCost(int cur_level) {
-        return 0;
-    }
+    
+
     public void levelUp() {
     }
     public String getLevelUpInfoDisplay(int cur_level) {
         return "";
     }
-    public float getBuyPrice() {
-        return 0;
-    }
+
     public float getSellPrice() {
         return 0;
     }
@@ -79,9 +70,5 @@ public class DartShooter extends Monkey {
                         bloon.getCoords().sub(getCoords()).setLength(2000F)
                 )
         );
-    }
-
-    public float getCooldownTime() {
-        return 1.5F;
     }
 }
