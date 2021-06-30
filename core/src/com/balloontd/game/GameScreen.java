@@ -171,7 +171,7 @@ public class GameScreen implements Screen{
         userInterface.addBuyMonkeyInfo(new DartlingGunner(this, new Vector2(0, 0)));
         userInterface.addBuyMonkeyInfo(new SuperMonkey(this, new Vector2(0, 0)));
     }
-    public void addMonkeyListener(Monkey monkey){
+    public void addMonkeyListener(final Monkey monkey){
         monkey.addListener(new ClickListener(){
            @Override
            public void clicked(InputEvent event, float x, float y){
@@ -180,13 +180,13 @@ public class GameScreen implements Screen{
 
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                userInterface.showMonkeyRange(true);
+                userInterface.showShootRange(true, monkey);
 
             }
 
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                userInterface.showMonkeyRange(false);
+                userInterface.showShootRange(false, monkey);
 
             }
         });
