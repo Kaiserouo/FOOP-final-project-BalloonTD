@@ -13,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.balloontd.BalloonTD;
 import com.balloontd.MyActor;
-import com.balloontd.game.monkeys.BombDart;
+import com.balloontd.game.monkeys.*;
+
+import java.awt.image.SinglePixelPackedSampleModel;
 
 
 public class GameScreen implements Screen{
@@ -140,7 +142,12 @@ public class GameScreen implements Screen{
 
     //use  userInterface.addBuyMonkeyInfo(monkey, image); to add new Monkey info
     public void addUIBuyMonkeyInfo(){
-
+        userInterface.addBuyMonkeyInfo(new DartShooter(this, new Vector2(0, 0)));
+        userInterface.addBuyMonkeyInfo(new TackShooter(this, new Vector2(0, 0)));
+        userInterface.addBuyMonkeyInfo(new BoomerangShooter(this, new Vector2(0, 0)));
+        userInterface.addBuyMonkeyInfo(new BombShooter(this, new Vector2(0, 0)));
+        userInterface.addBuyMonkeyInfo(new DartlingGunner(this, new Vector2(0, 0)));
+        userInterface.addBuyMonkeyInfo(new SuperMonkey(this, new Vector2(0, 0)));
     }
     public void addMonkeyListener(Monkey monkey){
         monkey.addListener(new ClickListener(){
