@@ -1,4 +1,4 @@
-round_count 3
+round_count 20
 ---
 round 1
 reward 100
@@ -8,21 +8,191 @@ stream
 5
 ---
 round 2
-reward 99
+reward 110
 stream 
 	wait 1
 	single Red
 10
 ---
 round 3
-reward 150
+reward 120
 wait 0.5
 stream
-	wait 0.5
+	wait 0.7
 	single Red
 5
+wait 1.5
+single Blue
+---
+round 4
+reward 130
+wait 0.5
+stream
+	wait 0.7
+	single Red
+5
+wait 1.5
+single Blue
+---
+round 5
+reward 140
+wait 0.5
 stream
 	wait 1
 	single Blue
+5
+---
+round 6
+reward 150
+wait 0.5
+stream
+	single Red
+	wait 0.3
+20
+wait 1.7
+single Green
+---
+round 7
+reward 160
+wait 0.5
+stream
+	single Red
+	wait 0.2
+	single Blue
+	wait 0.7
+25
+---
+round 8
+reward 170
+wait 0.5
+stream
+	single Green
+	wait 0.7
+15
+---
+round 9
+reward 180
+wait 0.5
+stream
+	single Yellow
+	wait 1.2
+10
+---
+round 10
+reward 190
+wait 0.5
+stream
+	single Yellow
+	wait 1.2
+10
+---
+round 11
+reward 200
+wait 0.5
+stream
+	single Pink
+	wait 1.2
+	single Yellow
+	wait 1.2
+	single Yellow
+	wait 2
+5
+---
+round 12
+reward 225
+wait 0.5
+stream
+	single Pink
+	wait 0.7
+15
+---
+round 13
+reward 250
+wait 0.5
+stream
+	single Red
+	wait 0.1
+50
+---
+round 14
+reward 275
+wait 0.5
+stream
+	single Black
+	wait 2
+	single White
+	wait 2
+5
+---
+round 15
+reward 300
+wait 0.5
+stream
+	single Zebra
+	wait 2
+5
+---
+round 16
+reward 400
+wait 0.5
+stream
+	single Red
+	wait 0.2
+	single Blue
+	wait 0.2
+	single Green
+	wait 0.2
+	single Yellow
+	wait 0.2
+	single Pink
+	wait 0.2
+	single Black
+	wait 0.2
+	single White
+	wait 2
+3
+---
+round 17
+reward 500
+wait 0.5
+stream
+	single Zebra
+	wait 1
+20
+---
+round 18
+reward 1000
+wait 0.5
+single Rainbow
+---
+round 19
+reward 2000
+wait 0.5
+single Rainbow
+wait 2
+single Rainbow
+---
+round 20
+reward 10000
+wait 0.5
+stream
+	single Red
+	wait 0.2
+	single Blue
+	wait 0.2
+	single Green
+	wait 0.2
+	single Yellow
+	wait 0.2
+	single Pink
+	wait 0.2
+	single Black
+	wait 0.2
+	single White
+	wait 0.2
+	single Zebra
+	wait 0.2
+	single Rainbow
+	wait 3
 5
 ---

@@ -94,9 +94,18 @@ public class DartlingGunner extends Monkey {
         setRotation(dir.angleDeg());
     }
     public Image getUIImage() {
+<<<<<<< HEAD
         return new Image(new TextureRegion(region));
     }
     public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
         return new DartlingGunner(game_screen, coords);
+=======
+        return null;
+
+    }
+    public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
+        return null;
+
+>>>>>>> d028d02d3fca13531fee192234c25e151782805a
     }
 }

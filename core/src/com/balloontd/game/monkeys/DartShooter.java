@@ -80,6 +80,7 @@ public class DartShooter extends Monkey {
             case 4:
                 return "Triple Darts";
         }
+        return null;
     }
     
     public void shoot(List<Bloon> in_range_bloons) {

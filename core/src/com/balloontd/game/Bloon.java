@@ -8,7 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class Bloon extends Actor {
     private TextureRegion region;
+<<<<<<< HEAD
     protected static final Float base_speed = 300F;
+=======
+    protected static final Float base_speed = 150F;    // to be decide
+>>>>>>> d028d02d3fca13531fee192234c25e151782805a
     private boolean is_alive;
     protected Float distance, radius, speed;
     protected GameScreen game_screen;

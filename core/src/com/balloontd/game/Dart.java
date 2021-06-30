@@ -33,24 +33,26 @@ public abstract class Dart extends Actor {
         // move forward, delegete to subclass
         move(delta);
 
-        // for all bloons, see if touched.
-        //   if touched bloon, call bloon::pop, then decrease
-        //   current dart pierce by 1 (and set alive state to dead if pierceCnt=0 or something)
-        for(Bloon bloon: game_screen.getBloonManager().getBloonList()){
-            if(!bloon.getAliveState()) continue;
-            if(touched(bloon)){
-                Gdx.app.log("Dart::act", "I see touched balloon!");
-                hit(bloon);
-                if((--pierce_cnt) <= 0){
-                    setAliveState(false);
-                    break;
-                }
-            }
-        }
-
         // see if go out of screen
         if(!game_screen.inRange(getCoords(), ALLOWED_DELTA))
             setAliveState(false);
+
+        // for all bloons, see if touched.
+        //   if touched bloon, call bloon::pop, then decrease
+        //   current dart pierce by 1 (and set alive state to dead if pierceCnt=0 or something)
+        if(getAliveState()){
+            for(Bloon bloon: game_screen.getBloonManager().getBloonList()){
+                if(!bloon.getAliveState()) continue;
+                if(touched(bloon)){
+                    Gdx.app.log("Dart::act", "I see touched balloon!");
+                    hit(bloon);
+                    if((--pierce_cnt) <= 0){
+                        setAliveState(false);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @Override

@@ -18,11 +18,15 @@ public class BoomerangShooter extends Monkey {
     public static final Float[] boomerangshooter_levelup_cost =
             new Float[] {600F, 200F, 300F};
 
+    private int pierce_cnt;
+
     public BoomerangShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, 150F);
         cd_time = 1.5F;
         levelup_cost = boomerangshooter_levelup_cost;
+
+        pierce_cnt = 3;
     }
 
     @Override
@@ -72,6 +76,7 @@ public class BoomerangShooter extends Monkey {
     //}
     public void shoot(List<Bloon> in_range_bloons) {
         // choose nearest one
+        if(in_range_bloons.size() == 0) return;
         Bloon bloon = in_range_bloons.stream().min(
                 (b1, b2) -> {
                     Float f1 = b1.getCoords().dst2(getCoords());
@@ -82,16 +87,25 @@ public class BoomerangShooter extends Monkey {
 
         // shoot
         game_screen.getDartManager().addDartInBuffer(
-                new NormalDart(
-                        game_screen, 3, getCoords(),
-                        bloon.getCoords().sub(getCoords()).setLength(2000F)
+                new BoomerangDart(
+                        game_screen, pierce_cnt, getCoords(), bloon.getCoords(),
+                        getShootRadius() * 1.3F,
+                        0.9F, 0.3F, 0.15F
                 )
         );
     }
     public Image getUIImage() {
+<<<<<<< HEAD
         return new Image(new TextureRegion(region));
     }
     public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
         return new BoomerangShooter(game_screen, coords);
+=======
+        return null;
+
+    }
+    public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
+        return null;
+>>>>>>> d028d02d3fca13531fee192234c25e151782805a
     }
 }

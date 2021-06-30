@@ -89,9 +89,18 @@ public class SuperMonkey extends Monkey {
         );
     }
     public Image getUIImage() {
+<<<<<<< HEAD
         return new Image(new TextureRegion(region));
     }
     public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
         return new SuperMonkey(game_screen, coords);
+=======
+        return null;
+
+    }
+    public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
+        return null;
+
+>>>>>>> d028d02d3fca13531fee192234c25e151782805a
     }
 }
