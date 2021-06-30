@@ -37,12 +37,11 @@ public class EndingPage extends Actor {
         backgroundImage = new Image(new TextureRegion(backgroundTexture));
         backgroundImage.setPosition(0, 0);
 
-        makeButton();
-
         pageTexture = new Texture("page.png");
         page = new Image(new TextureRegion(pageTexture));
         page.setPosition(BalloonTD.WORLD_WIDTH/2 - page.getWidth()/2,
                 BalloonTD.WORLD_HEIGHT/2 - page.getHeight()/2);
+        makeButton();
 
         font = new BitmapFont(Gdx.files.internal("font/ComicSansMS.fnt"));
     }
@@ -56,11 +55,9 @@ public class EndingPage extends Actor {
         style.over = new TextureRegionDrawable(new TextureRegion(returnToMenuTextureOn));
 
         returnToMenuButton = new Button(style);
-        returnToMenuButton.setVisible(false);
-        returnToMenuButton.setPosition(BalloonTD.WORLD_WIDTH/2 - page.getWidth()/2,
+        returnToMenuButton.setPosition(BalloonTD.WORLD_WIDTH/2 - returnToMenuButton.getWidth()/2 ,
                 page.getY() + 50);
 
-        gameScreen.addActor(returnToMenuButton);
 
         returnToMenuButton.addListener(new ClickListener(){
            @Override
@@ -72,6 +69,8 @@ public class EndingPage extends Actor {
 
     public void gameOver(boolean is_win){
         this.is_win = is_win;
+        gameScreen.addActor(this);
+        gameScreen.addActor(returnToMenuButton);
         if(is_win) {
             info = "You win";
         }else{
