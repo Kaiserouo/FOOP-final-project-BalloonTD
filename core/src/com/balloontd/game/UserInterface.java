@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -32,7 +33,6 @@ public class UserInterface extends Actor {
     private Texture exitGameTextureUp, exitGameTextureOn;
     private Button exitGameButton;
 
-
     private MonkeyInfoInterface monkeyInfoInterface;
 
     private BuyMonkeyInterface buyMonkeyInterface;
@@ -40,6 +40,11 @@ public class UserInterface extends Actor {
     private boolean interfaceMode;
     public final static boolean BUY_MONKEY_MODE = true;
     public final static boolean MONKEY_INFO_MODE = false;
+
+    public Texture bodyRangeTexture, shootRangeTexture, invalidRangeTexture;
+    public Image bodyRangeCircle, shootRangeCircle, invalidRangeCircle;
+
+    public EndingPage endingPage;
 
 
     public UserInterface(GameScreen gameScreen) {
@@ -59,6 +64,10 @@ public class UserInterface extends Actor {
         font = new BitmapFont(Gdx.files.internal("font/ComicSansMS.fnt"));
 
         interfaceMode = BUY_MONKEY_MODE;
+
+        makeRangeCircle();
+
+        endingPage = new EndingPage(gameScreen);
     }
 
 
@@ -106,7 +115,7 @@ public class UserInterface extends Actor {
         exitGameButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                gameScreen.dispose();
+                gameScreen.getBalloonTD().leaveGameScreen();
             }
         });
         exitGameButton.setPosition(1030, 0);
@@ -117,24 +126,66 @@ public class UserInterface extends Actor {
 
     public void setInterfaceMode(boolean mode){ interfaceMode = mode; }
 
+    public void makeRangeCircle(){
+        bodyRangeTexture = new Texture("blue-circle.png");
+        bodyRangeCircle = new Image(new TextureRegion(bodyRangeTexture));
+        bodyRangeCircle.setVisible(false);
+
+        shootRangeTexture = new Texture("blue-circle.png");
+        shootRangeCircle = new Image(new TextureRegion(shootRangeTexture));
+        shootRangeCircle.setVisible(false);
+
+        invalidRangeTexture = new Texture("red-circle.png");
+        invalidRangeCircle = new Image(new TextureRegion(invalidRangeTexture));
+        invalidRangeCircle.setVisible(false);
+    }
+
     // deal with placing the new monkey on the valid place in the map
 
     public void setWithMonkeyMode(boolean mode){buyMonkeyInterface.setWithMonkeyMode(mode);}
 
-
-    public boolean checkIntersection(){
-        MonkeyManager monkeyManager = gameScreen.getMonkeyManager();
-        Monkey newMonkey = buyMonkeyInterface.getNewMonkey();
-        for(Monkey monkey: monkeyManager.getMonkeyList()){
-            if(monkey.getCoords().dst(newMonkey.getCoords()) < monkey.getBodyRadius() + newMonkey.getBodyRadius()){
-                return true;
-            }
-        }
-        return  gameScreen.getTrail().checkIntersectCircle(newMonkey.getCoords(), newMonkey.getBodyRadius());
+    public Monkey getNewMonkey(){
+        return buyMonkeyInterface.getNewMonkey();
     }
 
-    public void addBuyMonkeyInfo(Monkey monkey, Image img){
-        buyMonkeyInterface.addBuyMonkeyInfo(monkey, img);
+
+    public void addBuyMonkeyInfo(Monkey monkey){
+        buyMonkeyInterface.addBuyMonkeyInfo(monkey);
+    }
+
+    public void showShootRange(boolean show, Monkey monkey){
+        if(show){
+            shootRangeCircle.setVisible(true);
+            shootRangeCircle.setSize(monkey.getShootRadius() * 2, monkey.getShootRadius() * 2);
+            shootRangeCircle.setPosition(monkey.getCoords().x - monkey.getShootRadius(),
+                    monkey.getCoords().y - monkey.getShootRadius());
+        }else{
+            shootRangeCircle.setVisible(false);
+        }
+    }
+    public void showBodyRange(boolean show, Monkey monkey){
+        if(show){
+            bodyRangeCircle.setVisible(true);
+            bodyRangeCircle.setSize(monkey.getBodyRadius() * 2, monkey.getBodyRadius() * 2);
+            bodyRangeCircle.setPosition(monkey.getCoords().x - monkey.getBodyRadius(),
+                    monkey.getCoords().y - monkey.getBodyRadius());
+        }else{
+            bodyRangeCircle.setVisible(false);
+        }
+    }
+    public void showInvalidRange(boolean show, Monkey monkey){
+        if(show){
+            invalidRangeCircle.setVisible(true);
+            invalidRangeCircle.setSize(monkey.getShootRadius() * 2, monkey.getShootRadius() * 2);
+           invalidRangeCircle.setPosition(monkey.getCoords().x - monkey.getBodyRadius(),
+                    monkey.getCoords().y - monkey.getShootRadius());
+        }else{
+            invalidRangeCircle.setVisible(false);
+        }
+    }
+
+    public void gameOver(boolean is_win){
+        endingPage.gameOver(is_win);
     }
 
 
@@ -142,12 +193,26 @@ public class UserInterface extends Actor {
     @Override
     public void act(float delta){
         super.act(delta);
+        if(gameScreen.getRoundManager().isInRound()){
+            startRoundButton.setVisible(false);
+        }else {
+            startRoundButton.setVisible(true);
+        }
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha){
         super.draw(batch, parentAlpha);
 
+        if(bodyRangeCircle.isVisible()){
+            bodyRangeCircle.draw(batch, parentAlpha);
+        }
+        if(shootRangeCircle.isVisible()){
+            shootRangeCircle.draw(batch, parentAlpha);
+        }
+        if(invalidRangeCircle.isVisible()){
+            invalidRangeCircle.draw(batch, parentAlpha);
+        }
         font.draw(batch, roundInfo, 960, 630);
     }
 
@@ -172,6 +237,15 @@ public class UserInterface extends Actor {
         }
         if(buyMonkeyInterface != null){
             buyMonkeyInterface.dispose();
+        }
+        if(bodyRangeTexture != null){
+            bodyRangeTexture.dispose();
+        }
+        if(shootRangeTexture != null){
+            shootRangeTexture.dispose();
+        }
+        if(invalidRangeTexture != null){
+            invalidRangeTexture.dispose();
         }
 
     }
