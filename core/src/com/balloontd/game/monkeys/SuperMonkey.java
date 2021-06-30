@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.balloontd.game.Bloon;
 import com.balloontd.game.GameScreen;
 import com.balloontd.game.Monkey;
@@ -20,7 +21,7 @@ public class SuperMonkey extends Monkey {
     public SuperMonkey(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, 175F);
-        cd_time = 0.1;
+        cd_time = 0.1F;
         levelup_cost = supermonkey_levelup_cost;
     }
 
@@ -69,8 +70,10 @@ public class SuperMonkey extends Monkey {
                 )
         );
     }
+    public Image getUIImage() {
 
-    public float getCooldownTime() {
-        return 1.5F;
+    }
+    public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
+
     }
 }
