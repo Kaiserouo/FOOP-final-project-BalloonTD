@@ -146,7 +146,6 @@ public class MenuScreen extends ScreenAdapter {
     private Image makePage(TextureRegion region){
         Image page = new Image(region);
         pageStage.addActor(page);
-        page.setVisible(false);
         page.setSize(page.getWidth() * 1.5F, page.getHeight() * 1.5F);
         page.setPosition(pageStage.getWidth()/2 - page.getWidth()/2,
                 pageStage.getHeight()/2 - page.getHeight()/2);
@@ -155,13 +154,17 @@ public class MenuScreen extends ScreenAdapter {
     private void makeInstructionPages(){
         instructionPages = new ArrayList<Image>();
         // maybe be multiple
-        instructionPages.add(makePage(new TextureRegion(new Texture("page.png"))));
+        for(int i=1 ; i<=3;  i++) {
+            instructionPages.add(makePage(new TextureRegion(new Texture("introduction/help_" + i + ".png"))));
+        }
     }
 
     private void makeBmdListPages(){
         bmdListPages = new ArrayList<Image>();
         //maybe be multiple
-        bmdListPages.add(makePage(new TextureRegion(new Texture("page.png"))));
+        for(int i=1 ; i<=7;  i++) {
+            bmdListPages.add(makePage(new TextureRegion(new Texture("introduction/list_" + i + ".png"))));
+        }
     }
 
     private void makeNextPageButton(){
@@ -221,6 +224,7 @@ public class MenuScreen extends ScreenAdapter {
             previousPageButton.setVisible(false);
         }else{
             previousPageButton.setVisible(true);
+            previousPageButton.toFront();
         }
 
         int totalPage;
@@ -234,6 +238,7 @@ public class MenuScreen extends ScreenAdapter {
             nextPageButton.setVisible(false);
         }else{
             nextPageButton.setVisible(true);
+            nextPageButton.toFront();
         }
 
         closePageButton.toFront();
