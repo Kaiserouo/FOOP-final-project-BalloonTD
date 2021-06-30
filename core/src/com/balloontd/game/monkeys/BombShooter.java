@@ -90,6 +90,7 @@ public class BombShooter extends Monkey {
                         bloon.getCoords().sub(getCoords()).setLength(bomb_speed)
                 )
         );
+        setRotation(bloon.getCoords().sub(getCoords()).angleDeg());
     }
 
     public Image getUIImage() {
