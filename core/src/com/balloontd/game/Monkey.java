@@ -108,10 +108,10 @@ public abstract class Monkey extends Actor {
 
     // get price, basically it's a proportion of total spent money on this monkey
     public float getSellPrice() {
-        int p = 0;
+        float p = 0;
         for (int i = 0; i <= cur_level; i++)
             p += levelup_cost[i];
-        return p;
+        return 0.8*p;
     }
 
     // given in-range bloons, perform shoot action
