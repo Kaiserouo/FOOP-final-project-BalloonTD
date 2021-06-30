@@ -16,7 +16,7 @@ public class StraightTrail implements Trail{
     private float length;
     private Vector2 delta_vec;
 
-    private Texture texture;
+//    private Texture texture;
 
     public StraightTrail(Vector2 start_point, Vector2 end_point) {
         Gdx.app.log("trail", "" + start_point + " " + end_point);
@@ -29,15 +29,15 @@ public class StraightTrail implements Trail{
         length = this.start_point.dst(this.end_point);
         delta_vec = this.end_point.cpy().sub(this.start_point);
 
-        Pixmap pixmap = new Pixmap(BalloonTD.WORLD_WIDTH, BalloonTD.WORLD_HEIGHT, Pixmap.Format.RGBA8888);
-        pixmap.setColor(0,0,0,1);
-        pixmap.drawLine(
-                (int) this.start_point.x,
-                (int) (BalloonTD.WORLD_HEIGHT-this.start_point.y),
-                (int) this.end_point.x,
-                (int) (BalloonTD.WORLD_HEIGHT-this.end_point.y)
-        );
-        texture = new Texture(pixmap);
+//        Pixmap pixmap = new Pixmap(BalloonTD.WORLD_WIDTH, BalloonTD.WORLD_HEIGHT, Pixmap.Format.RGBA8888);
+//        pixmap.setColor(0,0,0,1);
+//        pixmap.drawLine(
+//                (int) this.start_point.x,
+//                (int) (BalloonTD.WORLD_HEIGHT-this.start_point.y),
+//                (int) this.end_point.x,
+//                (int) (BalloonTD.WORLD_HEIGHT-this.end_point.y)
+//        );
+//        texture = new Texture(pixmap);
     }
 
     public float getTotalLength() {
@@ -53,7 +53,7 @@ public class StraightTrail implements Trail{
     }
     public void draw(Batch batch, float parentAlpha) {
         // don't draw anything for now
-        batch.draw(texture,0, 0);
+//        batch.draw(texture,0, 0);
     }
     public Vector2 getStartPoint() {
         return new Vector2(start_point);

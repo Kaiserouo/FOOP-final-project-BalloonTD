@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.balloontd.BalloonTD;
-import com.balloontd.MyActor;
 import com.balloontd.game.monkeys.*;
 
 import java.awt.image.SinglePixelPackedSampleModel;
@@ -24,16 +23,25 @@ public class GameScreen implements Screen{
     private BloonManager bloon_manager;
     private RoundManager round_manager;
     private UserInterface userInterface;
+    private BalloonTD balloon_td;
 
     private Trail trail;
     private Player player;
 
     private Stage stage;
+    private boolean is_game_over;
 
     public GameScreen(BalloonTD balloonTD){
+        is_game_over = false;
+        balloon_td = balloonTD;
+
         // stage act sequence:
         // background -> dart -> monkey -> bloon -> userinterface
         // -> (shoot range circle (if want to add now))
+        stage = new Stage(new StretchViewport(
+                BalloonTD.WORLD_WIDTH, BalloonTD.WORLD_HEIGHT
+        ));
+
         dart_manager = new DartManager();
         monkey_manager = new MonkeyManager();
         bloon_manager = new BloonManager();
@@ -46,9 +54,11 @@ public class GameScreen implements Screen{
                 new BloonSpawnerClass(this)
         );
 
+        trail = CompositeTrail.makeTrailByLines("trail.txt");
+        player = new Player();
+
         userInterface = new UserInterface(this);
         stage.addActor(userInterface);
-
 
         addUIBuyMonkeyInfo();
         addAllMonkeyListener();
@@ -67,6 +77,10 @@ public class GameScreen implements Screen{
         stage.draw();
 
         round_manager.act(delta);
+
+        if(player.getHP() <= 0){
+            gameOver(false);
+        }
 
         // at final stage of render, process all managers' buffer
         monkey_manager.dumpBufferToList();
@@ -106,6 +120,14 @@ public class GameScreen implements Screen{
     public Player getPlayer() { return player; }
     public Trail getTrail() { return trail; }
     public RoundManager getRoundManager(){ return round_manager; }
+    public BalloonTD getBalloonTD(){ return balloon_td; }
+
+    public void gameOver(boolean is_win) {
+        if(is_game_over) return;
+        is_game_over = true;
+        userInterface.gameOver(is_win);
+    }
+
     public void addActor(Actor actor){ stage.addActor(actor);}
     public void stageAddListener(){
         stage.addListener(new ClickListener(){

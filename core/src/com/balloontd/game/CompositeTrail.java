@@ -1,17 +1,19 @@
 package com.balloontd.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class CompositeTrail implements Trail {
     private List<Trail> trails;
     private float total_length;
     private ArrayList<Float> trail_lengths;
-
 
     public CompositeTrail(List<Trail> trails){
         // don't even check whether trail is connected
@@ -61,5 +63,31 @@ public class CompositeTrail implements Trail {
         for(Trail tr: trails)
             if(tr.checkIntersectCircle(coord, radius)) return true;
         return false;
+    }
+
+    public static Trail makeTrailByLines(String filename) {
+        // makes a composite trail full of lines
+        // filename contains lots of lines, each with 2 float
+        // representing (x, y)
+
+        String input = Gdx.files.internal(filename).readString();
+        Scanner scanner = new Scanner(new StringReader(input));
+        List<Trail> trails = new ArrayList<>();
+        Vector2 last_pos = null;
+        while(scanner.hasNextFloat()){
+            // will actually take 2 floats
+            if(last_pos == null)
+                last_pos = new Vector2(
+                        scanner.nextFloat(), scanner.nextFloat()
+                );
+            else {
+                Vector2 cur_pos = new Vector2(
+                        scanner.nextFloat(), scanner.nextFloat()
+                );
+                trails.add(new StraightTrail(last_pos, cur_pos));
+                last_pos = cur_pos;
+            }
+        }
+        return new CompositeTrail(trails);
     }
 }

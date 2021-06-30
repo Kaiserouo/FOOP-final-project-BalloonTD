@@ -125,6 +125,10 @@ public class RoundManager {
                     if(getCurrentRound() < getTotalRound()){
                         proceedToNextRound();
                     }
+                    else{
+                        // game over
+                        game_screen.gameOver(true);
+                    }
                     is_in_round = false;
             }
         }
