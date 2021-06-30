@@ -16,6 +16,8 @@ public class GameScreen implements Screen{
     private MonkeyManager monkey_manager;
     private DartManager dart_manager;
     private BloonManager bloon_manager;
+    private RoundManager roundManager;
+    private UserInterface userInterface;
 
     private Trail trail;
     private Player player;
@@ -26,6 +28,8 @@ public class GameScreen implements Screen{
         // stage act sequence:
         // background -> dart -> monkey -> bloon -> userinterface
         // -> (shoot range circle (if want to add now))
+        userInterface = new UserInterface(this);
+        stage.addActor(userInterface);
     }
 
     @Override
@@ -75,7 +79,7 @@ public class GameScreen implements Screen{
     public BloonManager getBloonManager() { return bloon_manager; }
     public Player getPlayer() { return player; }
     public Trail getTrail() { return trail; }
-    public void addActor(Actor actor){ stage.addActor(actor);}
+    public RoundManager getRoundManager(){ return roundManager; }
 
     public boolean inRange(Vector2 coord, float allowed_delta) {
         // test if in range of screen

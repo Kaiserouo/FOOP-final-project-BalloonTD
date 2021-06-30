@@ -46,13 +46,35 @@ public class DartlingGunner extends Monkey {
         return "Shoot dart to cursor";
     }
     public void levelUp() {
+        cur_level++;
+        if(cur_level > getMaxLevel()){
+            cur_level--;
+            return;
+        }
+
+        switch (cur_level) {
+            case 1:
+                shoot_radius = 250F; break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }
     public String getLevelUpInfoDisplay(int cur_level) {
-        return "";
+        // writes upgrade name in HackMD
+        switch (cur_level + 1) {
+            case 1:
+                return "Focused Shooting"; // 8
+            case 2:
+                return "Faster Barrel";   // 1.5
+            case 3:
+                return "Stronger Dart"; // 2
+        }
     }
-    public float getSellPrice() {
-        return 0;
-    }
+    //public float getSellPrice() {
+        //return 0;
+    //}
     public void shoot(List<Bloon> in_range_bloons) {
         // get cursor's x, y
         Vector2 cursor = new Vector2(
