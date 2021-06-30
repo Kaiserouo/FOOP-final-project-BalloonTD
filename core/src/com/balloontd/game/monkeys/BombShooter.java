@@ -45,13 +45,31 @@ public class BombShooter extends Monkey {
         return "Shoot a bomb";
     }
     public void levelUp() {
+        cur_level++;
+        if(cur_level > getMaxLevel()){
+            cur_level--;
+            return;
+        }
+
+        switch (cur_level) {
+            case 1:
+                shoot_radius = 160F; break;
+            case 2:
+                break;
+        }
     }
     public String getLevelUpInfoDisplay(int cur_level) {
-        return "";
+        // writes upgrade name in HackMD
+        switch (cur_level + 1) {
+            case 1:
+                return "Longer Range";
+            case 2:
+                return "Larger Bomb";   // 50
+        }
     }
-    public float getSellPrice() {
-        return 0;
-    }
+    //public float getSellPrice() {
+        //return 0;
+    //}
     public void shoot(List<Bloon> in_range_bloons) {
         // choose nearest one
         Bloon bloon = in_range_bloons.stream().min(

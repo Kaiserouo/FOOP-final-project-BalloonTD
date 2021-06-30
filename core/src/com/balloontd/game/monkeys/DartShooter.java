@@ -72,18 +72,18 @@ public class DartShooter extends Monkey {
         // writes upgrade name in HackMD
         switch (cur_level + 1) {
             case 1:
-
+                return "Longer Ranger";
             case 2:
-
+                return "Piercing Dart";
             case 3:
-
+                return "Faster Shooting";
             case 4:
+                return "Triple Darts";
         }
     }
-
-    public float getSellPrice() {
-        return 0;
-    }
+    
+    //public float getSellPrice() {}
+    
     public void shoot(List<Bloon> in_range_bloons) {
         if(in_range_bloons.size() == 0) return;
         // choose nearest one

@@ -45,13 +45,36 @@ public class TackShooter extends Monkey {
         return "Shoot all directions";
     }
     public void levelUp() {
+        cur_level++;
+        if(cur_level > getMaxLevel()){
+            cur_level--;
+            return;
+        }
+
+        switch (cur_level) {
+            case 1:
+                cd_time = 0.8F; break;
+            case 2:
+                shoot_radius = 150F; break;
+            case 3:
+                break;
+        }
     }
     public String getLevelUpInfoDisplay(int cur_level) {
-        return "";
+        // writes upgrade name in HackMD
+        switch (cur_level + 1) {
+            case 1:
+                return "Faster Shooting";
+            case 2:
+                return "Longer Range";
+            case 3:
+                return "Tack Sprayer";  // 12
+        }
     }
-    public float getSellPrice() {
-        return 0;
-    }
+    
+    //public float getSellPrice() {
+        //return 0;
+    //}
     public void shoot(List<Bloon> in_range_bloons) {
         // simply shoot 8 direction
         for(int i = 0; i != 360; i += 45 ){
