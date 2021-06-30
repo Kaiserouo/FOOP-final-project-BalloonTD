@@ -9,11 +9,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.balloontd.BalloonTD;
 import com.balloontd.game.monkeys.*;
 
+import java.awt.*;
+import java.awt.image.BaseMultiResolutionImage;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.awt.image.SinglePixelPackedSampleModel;
 
 
@@ -24,6 +29,7 @@ public class GameScreen implements Screen{
     private RoundManager round_manager;
     private UserInterface userInterface;
     private BalloonTD balloon_td;
+    private Image map;
 
     private Trail trail;
     private Player player;
@@ -41,10 +47,11 @@ public class GameScreen implements Screen{
         stage = new Stage(new StretchViewport(
                 BalloonTD.WORLD_WIDTH, BalloonTD.WORLD_HEIGHT
         ));
-
+        map = new Image(new TextureRegion(new Texture("map.png")));
         dart_manager = new DartManager();
         monkey_manager = new MonkeyManager();
         bloon_manager = new BloonManager();
+        stage.addActor(map);
         stage.addActor(dart_manager);
         stage.addActor(monkey_manager);
         stage.addActor(bloon_manager);
