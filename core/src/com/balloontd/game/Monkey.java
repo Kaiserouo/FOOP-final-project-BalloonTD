@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public abstract class Monkey extends Actor {
     protected int cur_level;
     protected float cd_time;
+    protected float cd_countdown_time;
     protected float body_radius;
     protected float shoot_radius;
     protected boolean alive_state;
@@ -25,6 +26,8 @@ public abstract class Monkey extends Actor {
         this.game_screen = game_screen;
         this.body_radius = body_radius;
         this.shoot_radius = shoot_radius;
+
+        this.cd_countdown_time = 0;
 
         setSize(region.getRegionWidth(), region.getRegionHeight());
         setOrigin(region.getRegionWidth() * 0.5F, region.getRegionHeight() * 0.5F);
@@ -39,10 +42,10 @@ public abstract class Monkey extends Actor {
     @Override
     public void act(float delta) {
         // update CD time
-        cd_time += delta;
+        cd_countdown_time += delta;
 
         // shoot dart
-        if(cd_time > getCooldownTime()){
+        if(cd_countdown_time > getCooldownTime()){
             // find in-range bloons
             float range_squ = (float) Math.pow(getShootRadius(), 2);
             List<Bloon> in_range_bloons =
@@ -51,12 +54,12 @@ public abstract class Monkey extends Actor {
                                .filter(bloon -> bloon.getCoords().dst2(getCoords()) < range_squ)
                                .collect(Collectors.toList());
             if(in_range_bloons.size() != 0){
-                cd_time -= getCooldownTime();
+                cd_countdown_time -= getCooldownTime();
                 shoot(in_range_bloons);
             }
             else{
                 // no bloon in range, wait for 1/10 * cooldown time
-                cd_time = getCooldownTime() * 0.9F;
+                cd_countdown_time = getCooldownTime() * 0.9F;
             }
         }
     }

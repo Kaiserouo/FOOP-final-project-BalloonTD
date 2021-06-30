@@ -79,6 +79,7 @@ public class DartShooter extends Monkey {
 
             case 4:
         }
+        return null;
     }
 
     public float getSellPrice() {

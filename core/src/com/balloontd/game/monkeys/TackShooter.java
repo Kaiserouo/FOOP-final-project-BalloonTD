@@ -64,9 +64,11 @@ public class TackShooter extends Monkey {
         }
     }
     public Image getUIImage() {
+        return null;
 
     }
     public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
+        return null;
 
     }
 }

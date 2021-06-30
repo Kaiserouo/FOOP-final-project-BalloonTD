@@ -71,9 +71,11 @@ public class SuperMonkey extends Monkey {
         );
     }
     public Image getUIImage() {
+        return null;
 
     }
     public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
+        return null;
 
     }
 }
