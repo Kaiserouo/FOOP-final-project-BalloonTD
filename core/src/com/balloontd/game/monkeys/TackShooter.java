@@ -93,8 +93,5 @@ public class TackShooter extends Monkey {
     public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
         return new TackShooter(game_screen, coords);
     }
-
-    private interface ShootBehavior() {
-        void shoot(int)
-    }
+    
 }
