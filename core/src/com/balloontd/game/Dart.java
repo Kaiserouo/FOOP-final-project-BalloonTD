@@ -30,6 +30,8 @@ public abstract class Dart extends Actor {
 
     @Override
     public void act(float delta) {
+        if(!getAliveState()) return;
+
         // move forward, delegete to subclass
         move(delta);
 

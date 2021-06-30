@@ -52,9 +52,9 @@ public class GameScreen implements Screen{
         monkey_manager = new MonkeyManager();
         bloon_manager = new BloonManager();
         stage.addActor(map);
-        stage.addActor(dart_manager);
-        stage.addActor(monkey_manager);
-        stage.addActor(bloon_manager);
+        stage.addActor(dart_manager.getGroupActor());
+        stage.addActor(monkey_manager.getGroupActor());
+        stage.addActor(bloon_manager.getGroupActor());
 
         round_manager = new RoundManager(
                 this, "game_round.txt",

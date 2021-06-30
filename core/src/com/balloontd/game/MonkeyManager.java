@@ -2,31 +2,24 @@ package com.balloontd.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MonkeyManager extends Actor {
+public class MonkeyManager {
     private List<Monkey> monkey_list;
+    private Group group;
     private List<Monkey> monkey_buffer;
 
     public MonkeyManager() {
+        group = new Group();
         monkey_list = new ArrayList<>();
         monkey_buffer = new ArrayList<>();
     }
 
-    @Override
-    public void act(float delta) {
-        for(Monkey monkey: monkey_list)
-            if(monkey.getAliveState())
-                monkey.act(delta);
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        for(Monkey monkey: monkey_list)
-            if(monkey.getAliveState())
-                monkey.draw(batch, parentAlpha);
+    public Group getGroupActor() {
+        return group;
     }
 
     public List<Monkey> getMonkeyList() {
@@ -38,11 +31,21 @@ public class MonkeyManager extends Actor {
     }
 
     public void dumpBufferToList() {
-        monkey_list.addAll(monkey_buffer);
+        for(Monkey monkey: monkey_buffer){
+            monkey_list.add(monkey);
+            group.addActor(monkey);
+        }
         monkey_buffer.clear();
     }
 
     public void cleanDeadMonkeys() {
-        monkey_list.removeIf(monkey -> !monkey.getAliveState());
+        List<Monkey> dead_monkey = new ArrayList<>();
+        for(Monkey monkey: monkey_list)
+            if(!monkey.getAliveState())
+                dead_monkey.add(monkey);
+        for(Monkey monkey: dead_monkey){
+            monkey_list.remove(monkey);
+            group.removeActor(monkey);
+        }
     }
 }

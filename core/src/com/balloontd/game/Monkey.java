@@ -41,6 +41,7 @@ public abstract class Monkey extends Actor {
     // Shooting animation should be tackled by subclass themselves.
     @Override
     public void act(float delta) {
+        if(!getAliveState()) return;
         // update CD time
         cd_countdown_time += delta;
 

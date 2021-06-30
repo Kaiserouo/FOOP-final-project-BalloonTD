@@ -29,6 +29,8 @@ public abstract class Bloon extends Actor {
 
     @Override
     public void act(float delta_t) {
+        if(!getAliveState()) return;
+
         setDistance(getDistance() + delta_t*speed);
         if(getDistance() > game_screen.getTrail().getTotalLength()){
             // walked to end, cost health

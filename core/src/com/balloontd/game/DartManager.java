@@ -3,29 +3,24 @@ package com.balloontd.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DartManager extends Actor {
     private List<Dart> dart_list;
+    private Group group;
     private List<Dart> dart_buffer;
 
     public DartManager() {
         dart_list = new ArrayList<>();
         dart_buffer = new ArrayList<>();
+        group = new Group();
     }
 
-    @Override
-    public void act(float delta) {
-        for(Dart dart: dart_list)
-            dart.act(delta);
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        for(Dart dart: dart_list)
-            dart.draw(batch, parentAlpha);
+    public Group getGroupActor() {
+        return group;
     }
 
     public List<Dart> getDartList() {
@@ -37,11 +32,21 @@ public class DartManager extends Actor {
     }
 
     public void dumpBufferToList() {
-        dart_list.addAll(dart_buffer);
+        for(Dart dart: dart_buffer){
+            dart_list.add(dart);
+            group.addActor(dart);
+        }
         dart_buffer.clear();
     }
 
     public void cleanDeadDarts() {
-        dart_list.removeIf(dart -> !dart.getAliveState());
+        List<Dart> dead_dart = new ArrayList<>();
+        for(Dart dart: dart_list)
+            if(!dart.getAliveState())
+                dead_dart.add(dart);
+        for(Dart dart: dead_dart){
+            dart_list.remove(dart);
+            group.removeActor(dart);
+        }
     }
 }

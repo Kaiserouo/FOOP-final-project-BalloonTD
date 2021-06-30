@@ -1,32 +1,26 @@
 package com.balloontd.game;
 
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BloonManager extends Actor {
     private List<Bloon> bloon_list;
+    private Group group;
     private List<Bloon> bloon_buffer;   // added to bloon_list at end of render()
 
     public BloonManager() {
         bloon_list = new ArrayList<>();
         bloon_buffer = new ArrayList<>();
+        group = new Group();
     }
 
-    @Override
-    public void act(float delta) {
-        for(Bloon bloon: bloon_list)
-            if(bloon.getAliveState())
-                bloon.act(delta);
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        for(Bloon bloon: bloon_list)
-            if(bloon.getAliveState())
-                bloon.draw(batch, parentAlpha);
+    public Group getGroupActor() {
+        return group;
     }
 
     public List<Bloon> getBloonList() {
@@ -58,11 +52,21 @@ public class BloonManager extends Actor {
     }
 
     public void dumpBufferToList() {
-        bloon_list.addAll(bloon_buffer);
+        for(Bloon bloon: bloon_buffer){
+            bloon_list.add(bloon);
+            group.addActor(bloon);
+        }
         bloon_buffer.clear();
     }
 
     public void cleanDeadBloons() {
-        bloon_list.removeIf(bloon -> !bloon.getAliveState());
+        List<Bloon> dead_bloon = new ArrayList<>();
+        for(Bloon bloon: bloon_list)
+            if(!bloon.getAliveState())
+                dead_bloon.add(bloon);
+        for(Bloon bloon: dead_bloon){
+            bloon_list.remove(bloon);
+            group.removeActor(bloon);
+        }
     }
 }
