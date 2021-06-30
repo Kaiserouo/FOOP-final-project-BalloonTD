@@ -14,13 +14,14 @@ import java.util.List;
 public class DartlingGunner extends Monkey {
     public static final Texture texture = new Texture(Gdx.files.internal("dartling_gunner.png"));
     public static final TextureRegion region = new TextureRegion(texture);
-
-    private static final Float[4] levelup_cost = new Float[4] {700, 200, 600, 1300};
+    public static final Float[] dartlinggunner_levelup_cost =
+            new Float[] {700F, 200F, 600F, 1300F};
 
     public DartlingGunner(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, Float.MAX_VALUE);
         cd_time = 0.3;
+        levelup_cost = dartlinggunner_levelup_cost;
     }
 
     @Override
@@ -42,22 +43,10 @@ public class DartlingGunner extends Monkey {
     public String getIntro() {
         return "Shoot dart to cursor";
     }
-    public int getCurLevel() {
-        return 0;
-    }
-    public int getMaxLevel() {
-        return 0;
-    }
-    public float getLevelUpCost(int cur_level) {
-        return 0;
-    }
     public void levelUp() {
     }
     public String getLevelUpInfoDisplay(int cur_level) {
         return "";
-    }
-    public float getBuyPrice() {
-        return 0;
     }
     public float getSellPrice() {
         return 0;
@@ -79,9 +68,5 @@ public class DartlingGunner extends Monkey {
                         bloon.getCoords().sub(getCoords()).setLength(2000F)
                 )
         );
-    }
-
-    public float getCooldownTime() {
-        return 1.5F;
     }
 }

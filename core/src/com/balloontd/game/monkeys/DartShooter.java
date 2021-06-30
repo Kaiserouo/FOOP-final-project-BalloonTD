@@ -14,13 +14,14 @@ import java.util.List;
 public class DartShooter extends Monkey {
     public static final Texture texture = new Texture(Gdx.files.internal("dart_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
+    public static final Float[] dartshooter_levelup_cost =
+            new Float[] {200F, 50F, 120F, 150F, 300F};
 
     public DartShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, 100F);
-        
-        levelup_cost = new float[5] {200, 50, 120, 150, 300};
-        cd_time = 1F;
+        cd_time = 1;
+        levelup_cost = dartshooter_levelup_cost;
     }
 
     @Override
@@ -43,7 +44,6 @@ public class DartShooter extends Monkey {
         return "Shoot a dart";
     }
     
-
     public void levelUp() {
     }
     public String getLevelUpInfoDisplay(int cur_level) {

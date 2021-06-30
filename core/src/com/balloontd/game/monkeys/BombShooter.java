@@ -14,13 +14,14 @@ import java.util.List;
 public class BombShooter extends Monkey {
     public static final Texture texture = new Texture(Gdx.files.internal("bomb_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
-
-    private static final Float[3] levelup_cost = new Float[3] {700, 250, 400};
+    public static final Float[] bombshooter_levelup_cost =
+            new Float[] {700F, 250F, 400F};
 
     public BombShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, 120F);
         cd_time = 2;
+        levelup_cost = bombshooter_levelup_cost;
     }
 
     @Override
@@ -42,22 +43,10 @@ public class BombShooter extends Monkey {
     public String getIntro() {
         return "Shoot a bomb";
     }
-    public int getCurLevel() {
-        return 0;
-    }
-    public int getMaxLevel() {
-        return 0;
-    }
-    public float getLevelUpCost(int cur_level) {
-        return 0;
-    }
     public void levelUp() {
     }
     public String getLevelUpInfoDisplay(int cur_level) {
         return "";
-    }
-    public float getBuyPrice() {
-        return 0;
     }
     public float getSellPrice() {
         return 0;

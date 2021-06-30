@@ -4,24 +4,24 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Monkey extends Actor {
+    protected int cur_level;
     protected float cd_time;
     protected float body_radius;
     protected float shoot_radius;
-    protected GameScreen game_screen;
     protected boolean alive_state;
-
-    protected float[] levelup_cost;
-    protected int cur_level, max_level;
+    protected Float[] levelup_cost;
+    protected GameScreen game_screen;
 
     public Monkey(GameScreen game_screen, TextureRegion region,
                   Vector2 coord, float body_radius, float shoot_radius) {
-        cd_time = 0;
+        this.cur_level = 0;
         this.game_screen = game_screen;
         this.body_radius = body_radius;
         this.shoot_radius = shoot_radius;
@@ -84,14 +84,13 @@ public abstract class Monkey extends Actor {
     // get basic information about monkey
     abstract public String getIntro();
 
-    // radius
-    public void setBodyRadius(float f) {this.body_radius = f;}
     public float getBodyRadius() { return body_radius; }
-    public
+
     public float getShootRadius() { return shoot_radius; }
 
     public int getCurLevel() { return cur_level; }
-    public int getMaxLevel() { return max_level; }
+
+    public int getMaxLevel() { return levelup_cost.length-1; }
 
     // given this level, get level up cost
     // (e.g. monkey is level 0, getLevelUp(getCurLevel()) = level up cost of 0->1)
@@ -112,6 +111,9 @@ public abstract class Monkey extends Actor {
 
     // given in-range bloons, perform shoot action
     abstract public void shoot(List<Bloon> in_range_bloons);
+
+    abstract public Image getUIImage();
+    abstract public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords);
 
     // get cooldown time. NOT the current remaining time until next shoot
     // e.g. monkey cooldown is 1 second, after 0.5 second, this should still return 1

@@ -14,13 +14,14 @@ import java.util.List;
 public class BoomerangShooter extends Monkey {
     public static final Texture texture = new Texture(Gdx.files.internal("boomerang_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
-
-    private static final Float[3] levelup_cost = new Float[3] {600, 200, 300};
+    public static final Float[] boomerangshooter_levelup_cost =
+            new Float[] {600F, 200F, 300F};
 
     public BoomerangShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
               region.getRegionWidth() * 0.5F + 10F, 150F);
         cd_time = 1.5;
+        levelup_cost = boomerangshooter_levelup_cost;
     }
 
     @Override
@@ -42,22 +43,10 @@ public class BoomerangShooter extends Monkey {
     public String getIntro() {
         return "Shoot a boomerang";
     }
-    public int getCurLevel() {
-        return 0;
-    }
-    public int getMaxLevel() {
-        return 0;
-    }
-    public float getLevelUpCost(int cur_level) {
-        return 0;
-    }
     public void levelUp() {
     }
     public String getLevelUpInfoDisplay(int cur_level) {
         return "";
-    }
-    public float getBuyPrice() {
-        return 0;
     }
     public float getSellPrice() {
         return 0;

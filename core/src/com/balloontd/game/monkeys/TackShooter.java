@@ -14,13 +14,14 @@ import java.util.List;
 public class TackShooter extends Monkey {
     public static final Texture texture = new Texture(Gdx.files.internal("tack_shooter.png"));
     public static final TextureRegion region = new TextureRegion(texture);
-
-    private static final Float[4] levelup_cost = new Float[4] {350, 200, 150, 300};
+    public static final Float[] tackshooter_levelup_cost =
+            new Float[] {350F, 200F, 150F, 300F};
 
     public TackShooter(GameScreen game_screen, Vector2 coord) {
         super(game_screen, region, coord,
                 region.getRegionWidth() * 0.5F + 10F, 100F);
         cd_time = 1;
+        levelup_cost = tackshooter_levelup_cost;
     }
 
     @Override
@@ -42,22 +43,10 @@ public class TackShooter extends Monkey {
     public String getIntro() {
         return "Shoot all directions";
     }
-    public int getCurLevel() {
-        return 0;
-    }
-    public int getMaxLevel() {
-        return 0;
-    }
-    public float getLevelUpCost(int cur_level) {
-        return 0;
-    }
     public void levelUp() {
     }
     public String getLevelUpInfoDisplay(int cur_level) {
         return "";
-    }
-    public float getBuyPrice() {
-        return 0;
     }
     public float getSellPrice() {
         return 0;
@@ -72,9 +61,5 @@ public class TackShooter extends Monkey {
                     )
             );
         }
-    }
-
-    public float getCooldownTime() {
-        return 1.5F;
     }
 }
