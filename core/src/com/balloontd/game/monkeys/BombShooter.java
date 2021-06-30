@@ -67,9 +67,7 @@ public class BombShooter extends Monkey {
                 return "Larger Bomb";   // 50
         }
     }
-    //public float getSellPrice() {
-        //return 0;
-    //}
+    
     public void shoot(List<Bloon> in_range_bloons) {
         // choose nearest one
         Bloon bloon = in_range_bloons.stream().min(
@@ -90,9 +88,9 @@ public class BombShooter extends Monkey {
     }
 
     public Image getUIImage() {
-
+        return new Image(new TextureRegion(region));
     }
     public Monkey cloneMonkey(GameScreen game_screen, Vector2 coords) {
-
+        return new BombShooter(game_screen, coords);
     }
 }

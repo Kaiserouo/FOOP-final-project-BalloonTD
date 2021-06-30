@@ -82,8 +82,6 @@ public class DartShooter extends Monkey {
         }
     }
     
-    //public float getSellPrice() {}
-    
     public void shoot(List<Bloon> in_range_bloons) {
         if(in_range_bloons.size() == 0) return;
         // choose nearest one
