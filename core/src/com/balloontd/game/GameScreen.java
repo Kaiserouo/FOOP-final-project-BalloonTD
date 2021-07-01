@@ -139,20 +139,23 @@ public class GameScreen implements Screen{
         stage.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                if(checkIntersection() == false && checkBoundary() == true){
-                    Monkey monkey = userInterface.getNewMonkey();
+                Monkey monkey = userInterface.getNewMonkey();
+                if(monkey == null){
+                    stage.removeListener(this);
+                    userInterface.setWithMonkeyMode(false);
+                }
+                else if(checkIntersection(monkey) == false && checkBoundary(monkey) == true){
+                    player.setMoney(player.getMoney() - monkey.getBuyPrice());
                     monkey_manager.addMonkeyInBuffer(monkey);
                     addMonkeyListener(monkey);
                     stage.removeListener(this);
                     userInterface.setWithMonkeyMode(false);
-                    System.out.println("place monkey");
                 }
             }
         });
     }
     // return true means invalid placing
-    public boolean checkIntersection(){
-        Monkey newMonkey = userInterface.getNewMonkey();
+    public boolean checkIntersection(Monkey newMonkey){
 
         for(Monkey monkey: monkey_manager.getMonkeyList()){
             if(monkey.getCoords().dst(newMonkey.getCoords()) < monkey.getBodyRadius() + newMonkey.getBodyRadius()){
@@ -163,8 +166,7 @@ public class GameScreen implements Screen{
     }
 
     //return false means invalid placing
-    public boolean checkBoundary(){
-        Monkey newMonkey = userInterface.getNewMonkey();
+    public boolean checkBoundary(Monkey newMonkey){
         if(newMonkey.getCoords().x + newMonkey.getBodyRadius() > 955
                 || newMonkey.getCoords().x - newMonkey.getBodyRadius() < 0){
             return false;

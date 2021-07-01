@@ -31,6 +31,9 @@ public class BuyMonkeyInterface extends Actor {
     private Texture buyMonkeyTextureUp, buyMonkeyTextureOn;
     private Button buyMonkeyButton;
 
+    private Texture cancelBuyMonkeyTextureUp, cancelBuyMonkeyTextureOn;
+    private Button cancelBuyMonkeyButton;
+
     private Monkey newMonkey;
     private boolean withMonkeyMode;
 
@@ -44,12 +47,7 @@ public class BuyMonkeyInterface extends Actor {
         makeNextMonkeyButton();
         makePreviousMonkeyButton();
         makeBuyMonkeyButton();
-    }
-
-
-    public void addBuyMonkeyInfo(Monkey monkey){
-        BuyMonkeyInfo buyMonkeyInfo = new BuyMonkeyInfo(monkey, monkey.getUIImage());
-        buyMonkeyInfoList.add(buyMonkeyInfo);
+        makeCancelBuyMonkeyButton();
     }
 
     private void makeNextMonkeyButton(){
@@ -106,7 +104,6 @@ public class BuyMonkeyInterface extends Actor {
                 Monkey monkey = buyMonkeyInfoList.get(infoIndex).getMonkey();
                 Player player = gameScreen.getPlayer();
                 if(player.getMoney() >= monkey.getBuyPrice()) {
-                    player.setMoney(player.getMoney() - monkey.getBuyPrice());
                     newMonkey = monkey.cloneMonkey(gameScreen, new Vector2(Gdx.input.getX(), Gdx.input.getY()));
                     setWithMonkeyMode(true);
                     gameScreen.stageAddListener();
@@ -116,6 +113,30 @@ public class BuyMonkeyInterface extends Actor {
         });
         gameScreen.addActor(buyMonkeyButton);
         buyMonkeyButton.setPosition(960, 430);
+    }
+
+    private void makeCancelBuyMonkeyButton(){
+        cancelBuyMonkeyTextureUp = new Texture("ui-buy-monkey-cancel-up.png");
+        cancelBuyMonkeyTextureOn = new Texture("ui-buy-monkey-cancel-on.png");
+        Button.ButtonStyle style = new Button.ButtonStyle();
+        style.up = new TextureRegionDrawable(new TextureRegion(cancelBuyMonkeyTextureUp));
+        style.over = new TextureRegionDrawable(new TextureRegion(cancelBuyMonkeyTextureOn));
+
+        cancelBuyMonkeyButton = new Button(style);
+        cancelBuyMonkeyButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                setWithMonkeyMode(false);
+                newMonkey = null;
+            }
+        });
+        gameScreen.addActor(cancelBuyMonkeyButton);
+        cancelBuyMonkeyButton.setPosition(960, 430);
+    }
+
+    public void addBuyMonkeyInfo(Monkey monkey){
+        BuyMonkeyInfo buyMonkeyInfo = new BuyMonkeyInfo(monkey, monkey.getUIImage());
+        buyMonkeyInfoList.add(buyMonkeyInfo);
     }
 
     public boolean getWithMonkeyMode(){return withMonkeyMode;}
@@ -131,9 +152,11 @@ public class BuyMonkeyInterface extends Actor {
         super.act(delta);
         if(userInterface.getInterfaceMode() == UserInterface.BUY_MONKEY_MODE) {
             if (getWithMonkeyMode()) {
+                buyMonkeyButton.setVisible(false);
+                cancelBuyMonkeyButton.setVisible(true);
                 newMonkey.setCoords(new Vector2(Gdx.input.getX(), BalloonTD.WORLD_HEIGHT - Gdx.input.getY()));
                 userInterface.showBodyRange(true, newMonkey);
-                if(gameScreen.checkIntersection() || !gameScreen.checkBoundary()){
+                if(gameScreen.checkIntersection(newMonkey) || !gameScreen.checkBoundary(newMonkey)){
                     userInterface.showInvalidRange(true, newMonkey);
                     userInterface.showShootRange(false, newMonkey);
                 }else{
@@ -141,13 +164,15 @@ public class BuyMonkeyInterface extends Actor {
                     userInterface.showShootRange(true, newMonkey);
                 }
             }else{
+                buyMonkeyButton.setVisible(true);
+                cancelBuyMonkeyButton.setVisible(false);
                 userInterface.showBodyRange(false, newMonkey);
                 userInterface.showInvalidRange(false, newMonkey);
                 userInterface.showShootRange(false, newMonkey);
             }
             nextMonkeyButton.setVisible(true);
             previousMonkeyButton.setVisible(true);
-            buyMonkeyButton.setVisible(true);
+
         }
         else{
             nextMonkeyButton.setVisible(false);
