@@ -30,6 +30,7 @@ public class BuyMonkeyInfo extends Actor {
 
         font = new BitmapFont(Gdx.files.internal("font/ComicSansMS.fnt"));
         font.getData().setScale(0.7F);
+        font.getData().setLineHeight(40.0F);
         setInfo();
     }
 
@@ -37,7 +38,7 @@ public class BuyMonkeyInfo extends Actor {
         info = "";
         info += (monkey.getName() + "\n");
         info += ("Price: $" + monkey.getBuyPrice() + "\n");
-        info += (monkey.getIntro());
+        info += ("Intro: " + monkey.getIntro());
     }
 
     public Monkey getMonkey(){return monkey;}
@@ -53,7 +54,7 @@ public class BuyMonkeyInfo extends Actor {
 
         background.draw(batch, parentAlpha);
         monkeyImage.draw(batch, parentAlpha);
-        font.draw(batch, info, 965, 410);
+        font.draw(batch, info, 965, 410, 150, 10, true);
 
     }
 

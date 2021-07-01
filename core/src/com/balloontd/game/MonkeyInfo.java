@@ -25,8 +25,7 @@ public class MonkeyInfo extends Actor {
 
         font = new BitmapFont(Gdx.files.internal("font/ComicSansMS.fnt"));
         font.getData().setScale(0.7F);
-        //setNowInfo();
-        //setUpgradeInfo();
+        font.getData().setLineHeight(40.0F);
     }
 
     public void setMonkey(Monkey monkey){
@@ -64,7 +63,7 @@ public class MonkeyInfo extends Actor {
         background.draw(batch, parentAlpha);
 
         font.draw(batch, nowInfo, 965, 410);
-        font.draw(batch, upgradeInfo, 965, 315);
+        font.draw(batch, upgradeInfo, 965, 315, 200, 10, true);
     }
 
     public void dispose(){
