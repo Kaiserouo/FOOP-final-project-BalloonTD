@@ -1,11 +1,11 @@
 package com.balloontd.start;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -20,53 +20,31 @@ public class StartScreen extends ScreenAdapter{
     private final BalloonTD balloonTD;
 
     private Stage stage;
-    private Texture logoTexture;
-    private Image logoImage;
+    private Texture backgroundTexture;
+    private Image backgroundImage;
 
-    private Texture playButtonUpTexture;
-    private Texture playButtonDownTexture;
-    private Button playButton;
-
-
+    private  StartScreenButtons startScreenButtons;
     public StartScreen(BalloonTD balloonTD){
         this.balloonTD = balloonTD;
 
         stage = new Stage(new StretchViewport(BalloonTD.WORLD_WIDTH, BalloonTD.WORLD_HEIGHT));
 
-        logoTexture = new Texture("bloons-td-logo.png");
-        logoImage = new Image(new TextureRegion(logoTexture));
-        logoImage.setPosition(0, 0);
-        logoImage.setSize((float)BalloonTD.WORLD_WIDTH, (float)BalloonTD.WORLD_HEIGHT);
-        logoImage.addListener(new ClickListener());
-        stage.addActor(logoImage);
+        makeBackground();
 
-        makePlayButton();
-        stage.addActor(playButton);
-
+        startScreenButtons = new StartScreenButtons(this);
     }
 
-    private void makePlayButton(){
-        playButtonUpTexture = new Texture("start-screen-play-button.png");
-        playButtonDownTexture = new Texture("start-screen-play-button-down.png");
-
-        Button.ButtonStyle style = new Button.ButtonStyle();
-        style.up = new TextureRegionDrawable(new TextureRegion(playButtonUpTexture));
-        style.over = new TextureRegionDrawable(new TextureRegion(playButtonDownTexture));
-
-        playButton = new Button(style);
-        playButton.setPosition(
-                stage.getWidth() *  0.4F -  playButton.getWidth()/2,
-                stage.getHeight() * 0.17F - playButton.getHeight()/2
-        );
-        playButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                balloonTD.enterMenuScreen();
-            }
-        });
-        playButton.setSize(playButton.getWidth() * 2F,
-                playButton.getHeight() * 2F);
+    private void makeBackground(){
+        backgroundTexture = new Texture("bloons-td-logo.png");
+        backgroundImage = new Image(new TextureRegion(backgroundTexture));
+        backgroundImage.setPosition(0, 0);
+        backgroundImage.setSize((float)BalloonTD.WORLD_WIDTH, (float)BalloonTD.WORLD_HEIGHT);
+        stage.addActor(backgroundImage);
     }
+
+    public void addActor(Actor actor){ stage.addActor(actor); }
+
+    public BalloonTD getBalloonTD(){ return  balloonTD; }
 
 
     @Override
@@ -91,9 +69,13 @@ public class StartScreen extends ScreenAdapter{
         if (stage != null) {
             stage.dispose();
         }
-        if (logoTexture != null) {
-            logoTexture.dispose();
+        if (backgroundTexture != null) {
+            backgroundTexture.dispose();
         }
+        if(startScreenButtons != null){
+            startScreenButtons.dispose();
+        }
+
     }
 
 }
