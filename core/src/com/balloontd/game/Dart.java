@@ -46,7 +46,6 @@ public abstract class Dart extends Actor {
             for(Bloon bloon: game_screen.getBloonManager().getBloonList()){
                 if(!bloon.getAliveState()) continue;
                 if(touched(bloon)){
-                    Gdx.app.log("Dart::act", "I see touched balloon!");
                     hit(bloon);
                     if((--pierce_cnt) <= 0){
                         setAliveState(false);
