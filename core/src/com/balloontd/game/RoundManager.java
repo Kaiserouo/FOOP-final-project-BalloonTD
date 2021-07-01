@@ -66,9 +66,6 @@ public class RoundManager {
         round_parser.parseFile(scanner, round_count);
         spawn_info = round_parser.getSpawnInfo();
         reward = round_parser.gerRewardList();
-
-        Gdx.app.log("[GR_spawn_info]", spawn_info.toString());
-        Gdx.app.log("[GR_reward]", reward.toString());
     }
 
     public int getCurrentRound() {
@@ -155,12 +152,10 @@ class RoundParser {
     public List<Integer> gerRewardList() { return reward; }
 
     public void parseFile(Scanner scanner, int round_count) {
-        Gdx.app.log("Parser", "Parsing file...");
         spawn_info = new ArrayList<>();
         reward = new ArrayList<>();
 
         for(int i = 0; i != round_count; ++i){
-            Gdx.app.log("Parser", "Reading round...");
             // read <round_header>
             scanner.nextLine();
             reward.add(Integer.parseInt(scanner.nextLine().split("[ ]+")[1]));
@@ -175,10 +170,8 @@ class RoundParser {
                 input_str.append("\n");
             }
             inputs = input_str.toString().split("[ \t\n]+");
-            Gdx.app.log("Parser", "Finish reading, inputs = [" + List.of(inputs).toString() + "]");
             next = 0;
             elapsed_time = 0;
-            Gdx.app.log("RoundParser", "Inputs: " + inputs + ", length: " + inputs.length);
             List<Map.Entry<Float, String>> cur_round_info = new ArrayList<>();
             while(next != inputs.length)
                 cur_round_info.addAll(OneStatement());

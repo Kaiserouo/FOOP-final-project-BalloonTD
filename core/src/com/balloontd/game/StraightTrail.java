@@ -19,7 +19,6 @@ public class StraightTrail implements Trail{
 //    private Texture texture;
 
     public StraightTrail(Vector2 start_point, Vector2 end_point) {
-        Gdx.app.log("trail", "" + start_point + " " + end_point);
         if(start_point.equals(end_point))
             throw new RuntimeException("StraightTrail have length 0: " + start_point + " " + end_point);
 
