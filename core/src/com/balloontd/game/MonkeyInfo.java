@@ -39,7 +39,7 @@ public class MonkeyInfo extends Actor {
         nowInfo = "";
         nowInfo += (monkey.getName() + "\n");
         nowInfo += ("Lv." + monkey.getCurLevel() + "\n");
-        nowInfo += ("Sell: $" + monkey.getSellPrice());
+        nowInfo += ("Sell: $" + (int)monkey.getSellPrice() + "\n");
     }
 
     private void setUpgradeInfo(){
@@ -47,7 +47,7 @@ public class MonkeyInfo extends Actor {
         if(monkey.getCurLevel() < monkey.getMaxLevel()) {
             upgradeInfo += ("Upgrade : \n");
             upgradeInfo += (monkey.getLevelUpInfoDisplay(monkey.getCurLevel()) + "\n");
-            upgradeInfo += ("Price:  $" + monkey.getLevelUpCost(monkey.getCurLevel()));
+            upgradeInfo += ("Price:  $" + (int)monkey.getLevelUpCost(monkey.getCurLevel()));
         }
     }
 
@@ -62,8 +62,7 @@ public class MonkeyInfo extends Actor {
 
         background.draw(batch, parentAlpha);
 
-        font.draw(batch, nowInfo, 965, 410);
-        font.draw(batch, upgradeInfo, 965, 315, 200, 10, true);
+        font.draw(batch, nowInfo + upgradeInfo, 965, 410, 200, 10, true);
     }
 
     public void dispose(){

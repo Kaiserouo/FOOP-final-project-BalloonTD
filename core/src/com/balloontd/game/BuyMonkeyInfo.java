@@ -37,7 +37,7 @@ public class BuyMonkeyInfo extends Actor {
     private void setInfo(){
         info = "";
         info += (monkey.getName() + "\n");
-        info += ("Price: $" + monkey.getBuyPrice() + "\n");
+        info += ("Price: $" + (int)monkey.getBuyPrice() + "\n");
         info += ("Intro: " + monkey.getIntro());
     }
 
