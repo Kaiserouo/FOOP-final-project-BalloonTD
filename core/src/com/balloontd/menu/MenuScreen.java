@@ -22,18 +22,11 @@ public class MenuScreen extends ScreenAdapter {
     private Stage stage;
     private Image background;
 
-    private Button startGameButton;
-    private Button exitGameButton;
-    private Button instructionButton;
-    private Button bmdListButton;
+    private MenuScreenButtons menuScreenButtons;
 
-
+    private MenuScreenPages menuScreenPages;
     private Stage pageStage;
-    private boolean instructionPageOpen, bmdListPageOpen;
-    private Button nextPageButton, previousPageButton, closePageButton;
-    private ArrayList<Image> instructionPages;
-    private ArrayList<Image> bmdListPages;
-    private int nowPage = 0;
+
 
     public MenuScreen(BalloonTD balloonTD){
         this.balloonTD = balloonTD;
@@ -44,205 +37,25 @@ public class MenuScreen extends ScreenAdapter {
         background = new Image(new TextureRegion(backgroundTexture));
         stage.addActor(background);
 
-        makeStartGameButton();
-        makeExitGameButton();
-        makeInstructionButton();
-        makeBmdListButton();
-
+        menuScreenButtons = new MenuScreenButtons(this);
+        stage.addActor(menuScreenButtons);
 
         pageStage = new Stage(new StretchViewport(BalloonTD.WORLD_WIDTH, BalloonTD.WORLD_HEIGHT));
-        instructionPageOpen = false; bmdListPageOpen = false;
-        nowPage = 0;
-        makeInstructionPages();
-        makeBmdListPages();
-        makeClosePageButton();
-        makeNextPageButton();
-        makePreviousPageButton();
-
+        menuScreenPages = new MenuScreenPages(this);
+        pageStage.addActor(menuScreenPages);
     }
 
-    private Button.ButtonStyle makeStyle(Texture upTexture, Texture downTexture){
-        Button.ButtonStyle style = new Button.ButtonStyle();
-        style.up = new TextureRegionDrawable(upTexture);
-        style.over = new TextureRegionDrawable(downTexture);
-        return style;
-    }
+    public BalloonTD getBalloonTD(){ return balloonTD; }
 
-    private void makeStartGameButton(){
-        Button.ButtonStyle style = makeStyle(new Texture("menu-start-button.png"),
-                                             new Texture("menu-start-button-down.png"));
+    public void stageAddActor(Actor actor){ stage.addActor(actor);}
 
-        startGameButton = new Button(style);
-        startGameButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                balloonTD.enterGameScreen();
-            }
-        });
-        stage.addActor(startGameButton);
+    public void pageStageAddActor(Actor actor){ pageStage.addActor(actor);}
 
-        startGameButton.setPosition(0, 180);
-        startGameButton.setSize(startGameButton.getWidth() * 1.5F, startGameButton.getHeight() * 1.5F);
-    }
+    public void pageStageSetInputProcessor(){ Gdx.input.setInputProcessor(pageStage); }
 
-    private void makeExitGameButton(){
-        Button.ButtonStyle style = makeStyle(new Texture("menu-exit-button.png"),
-                new Texture("menu-exit-button-down.png"));
+    public void stageSetInputProcessor(){ Gdx.input.setInputProcessor(stage); }
 
-        exitGameButton = new Button(style);
-        exitGameButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
-        stage.addActor(exitGameButton);
-
-        exitGameButton.setPosition(780, 40);
-        exitGameButton.setSize(exitGameButton.getWidth() * 1.8F, exitGameButton.getHeight() * 1.8F);
-    }
-
-    private void makeInstructionButton(){
-        Button.ButtonStyle style = makeStyle(new Texture("menu-instruction.png"),
-                new Texture("menu-instruction-down.png"));
-
-        instructionButton = new Button(style);
-        instructionButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                instructionPageOpen = true;
-                Gdx.input.setInputProcessor(pageStage);
-                nowPage = 0;
-                instructionPages.get(nowPage).setVisible(true);
-            }
-        });
-        stage.addActor(instructionButton);
-
-        instructionButton.setPosition(820, 335);
-        instructionButton.setSize(instructionButton.getWidth() * 1.8F, instructionButton.getHeight() * 1.8F);
-    }
-
-    private void makeBmdListButton(){
-        Button.ButtonStyle style = makeStyle(new Texture("menu-bmdList.png"),
-                new Texture("menu-bmdList-down.png"));
-
-        bmdListButton = new Button(style);
-        bmdListButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                bmdListPageOpen = true;
-                Gdx.input.setInputProcessor(pageStage);
-                nowPage = 0;
-                bmdListPages.get(nowPage).setVisible(true);
-            }
-        });
-        stage.addActor(bmdListButton);
-
-        bmdListButton.setPosition(30, 495);
-        bmdListButton.setSize(bmdListButton.getWidth() * 1.6F, bmdListButton.getHeight() * 1.6F);
-    }
-
-
-    private Image makePage(TextureRegion region){
-        Image page = new Image(region);
-        pageStage.addActor(page);
-        page.setSize(page.getWidth() * 1.5F, page.getHeight() * 1.5F);
-        page.setPosition(pageStage.getWidth()/2 - page.getWidth()/2,
-                pageStage.getHeight()/2 - page.getHeight()/2);
-        return page;
-    }
-    private void makeInstructionPages(){
-        instructionPages = new ArrayList<Image>();
-        // maybe be multiple
-        for(int i=1 ; i<=3;  i++) {
-            instructionPages.add(makePage(new TextureRegion(new Texture("introduction/help_" + i + ".png"))));
-        }
-    }
-
-    private void makeBmdListPages(){
-        bmdListPages = new ArrayList<Image>();
-        //maybe be multiple
-        for(int i=1 ; i<=7;  i++) {
-            bmdListPages.add(makePage(new TextureRegion(new Texture("introduction/list_" + i + ".png"))));
-        }
-    }
-
-    private void makeNextPageButton(){
-        Button.ButtonStyle style = makeStyle(new Texture("page-next.png"),
-                new Texture("page-next-down.png"));
-
-        nextPageButton = new Button(style);
-        nextPageButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                nowPage++;
-            }
-        });
-        pageStage.addActor(nextPageButton);
-        //nextPageButton.setVisible(false);
-
-        nextPageButton.setPosition(890, 100);
-    }
-
-    private void makePreviousPageButton(){
-        Button.ButtonStyle style = makeStyle(new Texture("page-previous.png"),
-                new Texture("page-previous-down.png"));
-
-        previousPageButton = new Button(style);
-            previousPageButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                nowPage--;
-            }
-        });
-            pageStage.addActor(previousPageButton);
-            //previousPageButton.setVisible(false);
-
-            previousPageButton.setPosition(160, 100);
-    }
-
-    private void makeClosePageButton(){
-        Button.ButtonStyle style = makeStyle(new Texture("page-close.png"),
-                new Texture("page-close-down.png"));
-
-        closePageButton = new Button(style);
-        closePageButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                instructionPageOpen = false;
-                bmdListPageOpen = false;
-                Gdx.input.setInputProcessor(stage);
-            }
-        });
-        pageStage.addActor(closePageButton);
-
-        closePageButton.setPosition(900, 500);
-    }
-
-    private void setButtonsVisibility(){
-        if(nowPage == 0){
-            previousPageButton.setVisible(false);
-        }else{
-            previousPageButton.setVisible(true);
-            previousPageButton.toFront();
-        }
-
-        int totalPage;
-        if(instructionPageOpen){
-            totalPage = instructionPages.size();
-        }else{
-            totalPage = bmdListPages.size();
-        }
-
-        if(nowPage == totalPage - 1){
-            nextPageButton.setVisible(false);
-        }else{
-            nextPageButton.setVisible(true);
-            nextPageButton.toFront();
-        }
-
-        closePageButton.toFront();
-    }
+    public MenuScreenPages getMenuScreenPages(){ return  menuScreenPages; }
 
 
     @Override
@@ -257,13 +70,7 @@ public class MenuScreen extends ScreenAdapter {
 
         stage.act();
         stage.draw();
-        if(instructionPageOpen || bmdListPageOpen){
-            if(instructionPageOpen) {
-                instructionPages.get(nowPage).toFront();
-            }else{
-                bmdListPages.get(nowPage).toFront();
-            }
-            setButtonsVisibility();
+        if(menuScreenPages.getPageOpen() != MenuScreenPages.PAGE_CLOSE){
             pageStage.act();
             pageStage.draw();
         }
@@ -274,6 +81,9 @@ public class MenuScreen extends ScreenAdapter {
     public void dispose() {
         if (stage != null) {
             stage.dispose();
+        }
+        if(pageStage != null){
+            pageStage.dispose();
         }
     }
 
