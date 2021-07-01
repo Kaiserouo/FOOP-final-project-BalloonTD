@@ -62,7 +62,7 @@ public class GameScreen implements Screen{
         );
 
         trail = CompositeTrail.makeTrailByLines("trail.txt");
-        player = new Player(200, 5000);
+        player = new Player(100, 400);
 
         userInterface = new UserInterface(this);
         stage.addActor(userInterface);
