@@ -83,8 +83,8 @@ public class UserInterface extends Actor {
     private void setRoundInfo(){
         roundInfo = "";
         roundInfo += ("Round: " + gameScreen.getRoundManager().getCurrentRound() + "\n");
-        roundInfo += ("Money: " + gameScreen.getPlayer().getMoney() + "\n");
-        roundInfo += ("HP: " + gameScreen.getPlayer().getHP());
+        roundInfo += ("Money: " + (int)gameScreen.getPlayer().getMoney() + "\n");
+        roundInfo += ("HP: " + (int)gameScreen.getPlayer().getHP());
     }
 
     private void makeStartRoundButton(){
