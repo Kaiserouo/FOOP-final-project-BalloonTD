@@ -93,7 +93,7 @@ public class MenuScreen extends ScreenAdapter {
         exitGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                balloonTD.dispose();
+                Gdx.app.exit();
             }
         });
         stage.addActor(exitGameButton);

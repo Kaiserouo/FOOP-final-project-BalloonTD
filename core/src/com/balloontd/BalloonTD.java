@@ -53,7 +53,6 @@ public class BalloonTD extends Game {
 
 	@Override
 	public void dispose () {
-		this.dispose();
 		if(menuScreen != null) {
 			menuScreen.dispose();
 			menuScreen = null;
