@@ -133,7 +133,7 @@ public class BuyMonkeyInterface extends Actor {
             if (getWithMonkeyMode()) {
                 newMonkey.setCoords(new Vector2(Gdx.input.getX(), BalloonTD.WORLD_HEIGHT - Gdx.input.getY()));
                 userInterface.showBodyRange(true, newMonkey);
-                if(gameScreen.checkIntersection()){
+                if(gameScreen.checkIntersection() || !gameScreen.checkBoundary()){
                     userInterface.showInvalidRange(true, newMonkey);
                     userInterface.showShootRange(false, newMonkey);
                 }else{

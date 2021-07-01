@@ -139,7 +139,7 @@ public class GameScreen implements Screen{
         stage.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                if(checkIntersection() == false){
+                if(checkIntersection() == false && checkBoundary() == true){
                     Monkey monkey = userInterface.getNewMonkey();
                     monkey_manager.addMonkeyInBuffer(monkey);
                     addMonkeyListener(monkey);
@@ -150,8 +150,10 @@ public class GameScreen implements Screen{
             }
         });
     }
+    // return true means invalid placing
     public boolean checkIntersection(){
         Monkey newMonkey = userInterface.getNewMonkey();
+
         for(Monkey monkey: monkey_manager.getMonkeyList()){
             if(monkey.getCoords().dst(newMonkey.getCoords()) < monkey.getBodyRadius() + newMonkey.getBodyRadius()){
                 return true;
@@ -159,7 +161,20 @@ public class GameScreen implements Screen{
         }
         return  trail.checkIntersectCircle(newMonkey.getCoords(), newMonkey.getBodyRadius());
     }
-    
+
+    //return false means invalid placing
+    public boolean checkBoundary(){
+        Monkey newMonkey = userInterface.getNewMonkey();
+        if(newMonkey.getCoords().x + newMonkey.getBodyRadius() > 955
+                || newMonkey.getCoords().x - newMonkey.getBodyRadius() < 0){
+            return false;
+        }
+        if(newMonkey.getCoords().y + newMonkey.getBodyRadius() > 650
+                || newMonkey.getCoords().y - newMonkey.getBodyRadius() < 0){
+            return false;
+        }
+        return true;
+    }
 
     public boolean inRange(Vector2 coord, float allowed_delta) {
         // test if in range of screen
@@ -184,14 +199,18 @@ public class GameScreen implements Screen{
         monkey.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                userInterface.setInterfaceMode(UserInterface.MONKEY_INFO_MODE);
-                userInterface.setMonkey(monkey);
+                if(userInterface.getWithMonkeyMode() == false) {
+                    userInterface.setInterfaceMode(UserInterface.MONKEY_INFO_MODE);
+                    userInterface.setMonkey(monkey);
+                }
             }
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                userInterface.setMouseOnMonkey(true);
-                userInterface.showShootRange(true, monkey);
-                userInterface.showBodyRange(true, monkey);
+                if(userInterface.getWithMonkeyMode() == false) {
+                    userInterface.setMouseOnMonkey(true);
+                    userInterface.showShootRange(true, monkey);
+                    userInterface.showBodyRange(true, monkey);
+                }
             }
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {

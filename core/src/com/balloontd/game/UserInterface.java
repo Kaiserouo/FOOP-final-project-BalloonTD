@@ -124,6 +124,11 @@ public class UserInterface extends Actor {
         gameScreen.addActor(exitGameButton);
     }
 
+
+    public void addBuyMonkeyInfo(Monkey monkey){
+        buyMonkeyInterface.addBuyMonkeyInfo(monkey);
+    }
+
     public boolean getInterfaceMode(){ return interfaceMode;   }
 
     public void setInterfaceMode(boolean mode){ interfaceMode = mode; }
@@ -145,15 +150,7 @@ public class UserInterface extends Actor {
     // deal with placing the new monkey on the valid place in the map
 
     public void setWithMonkeyMode(boolean mode){buyMonkeyInterface.setWithMonkeyMode(mode);}
-
-    public Monkey getNewMonkey(){
-        return buyMonkeyInterface.getNewMonkey();
-    }
-
-
-    public void addBuyMonkeyInfo(Monkey monkey){
-        buyMonkeyInterface.addBuyMonkeyInfo(monkey);
-    }
+    public boolean getWithMonkeyMode(){return  buyMonkeyInterface.getWithMonkeyMode();}
 
     public void showShootRange(boolean show, Monkey monkey){
         if(show){
@@ -179,21 +176,29 @@ public class UserInterface extends Actor {
         if(show){
             invalidRangeCircle.setVisible(true);
             invalidRangeCircle.setSize(monkey.getShootRadius() * 2, monkey.getShootRadius() * 2);
-           invalidRangeCircle.setPosition(monkey.getCoords().x - monkey.getShootRadius(),
+            invalidRangeCircle.setPosition(monkey.getCoords().x - monkey.getShootRadius(),
                     monkey.getCoords().y - monkey.getShootRadius());
         }else{
             invalidRangeCircle.setVisible(false);
         }
     }
 
+    // get the new buying monkey
+    public Monkey getNewMonkey(){
+        return buyMonkeyInterface.getNewMonkey();
+    }
+
+    // deal with clicking monkey to get monkey info
+    public void setMouseOnMonkey(boolean isOn){ mouseOnMonkey = isOn; }
+    public boolean getMouseOnMonkey(){return mouseOnMonkey;}
+    public void setMonkey(Monkey monkey){monkeyInfoInterface.setMonkey(monkey);}
+
+
+    // game ending
     public void gameOver(boolean is_win){
         endingPage.gameOver(is_win);
     }
 
-    public void setMouseOnMonkey(boolean isOn){
-        mouseOnMonkey = isOn;
-    }
-    public void setMonkey(Monkey monkey){monkeyInfoInterface.setMonkey(monkey);}
 
     @Override
     public void act(float delta){
