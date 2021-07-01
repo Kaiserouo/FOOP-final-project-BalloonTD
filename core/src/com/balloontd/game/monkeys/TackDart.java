@@ -16,7 +16,7 @@ public class TackDart extends NormalDart {
     public TackDart(GameScreen game_screen, int pierce_cnt,
                       Vector2 coord, Vector2 velocity) {
         super(game_screen, pierce_cnt, coord, velocity);
-        setScale(0.6F);
+        setScale(0.8F);
     }
 
     @Override
