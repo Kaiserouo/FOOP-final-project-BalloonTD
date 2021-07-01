@@ -156,7 +156,6 @@ public class GameScreen implements Screen{
     }
     // return true means invalid placing
     public boolean checkIntersection(Monkey newMonkey){
-
         for(Monkey monkey: monkey_manager.getMonkeyList()){
             if(monkey.getCoords().dst(newMonkey.getCoords()) < monkey.getBodyRadius() + newMonkey.getBodyRadius()){
                 return true;
@@ -217,7 +216,6 @@ public class GameScreen implements Screen{
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 userInterface.setMouseOnMonkey(false);
-
             }
         });
     }
