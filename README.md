@@ -1,5 +1,8 @@
 # Final-Project
 
+> Forked from Github Classroom for National Taiwan University's Fundamental OOP course, in Spring 2021.
+> Done as a team with 3 people: 黃政穎, 郭承諺, 戴培凱. Responsibility / Workload for each member is written in `report.pdf`. Although due to Github rendering issue, it is best to download the report and read on Adobe PDF reader.
+
 BalloonTD, a remake of a series of popular flash games: Bloons Tower Defence.
 
 <img src="images/game_screen.png">
